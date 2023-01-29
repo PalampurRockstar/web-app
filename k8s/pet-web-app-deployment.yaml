@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: student-app-client
+  name: pet-web-app
 spec:
   selector:
     matchLabels:
-      app: student-app-client
+      app: pet-web-app
   replicas: 1
   template:
     metadata:
       labels:
-        app: student-app-client
+        app: pet-web-app
     spec:
       containers:
-        - name: student-app-client
-          image: nirajsonawane/student-app-client
+        - name: pet-web-app
+          image: us.gcr.io/main-aura-375015/web-app:v1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 80

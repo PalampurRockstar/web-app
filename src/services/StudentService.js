@@ -1,34 +1,31 @@
 import http from "../http-common";
-
 const getAll = () => {
-  console.log("#############################################")
   console.log(process.env.REACT_APP_STUDENT_APP_API_URL);
-  return http.get("/students");
+  return http.get(`/pets`);
 };
 
-const get = id => {
-  return http.get(`/students/${id}`);
+const get = (id) => {
+  return http.get(`/pets/${id}`);
 };
 
-const create = data => {
-  return http.post("/students", data);
+const create = (data) => {
+  return http.post(`/pets`, data);
 };
 
 const update = (id, data) => {
-
-  return http.put(`/students/${id}`, data);
+  return http.put(`/pets/${id}`, data);
 };
 
-const remove = id => {
-  return http.delete(`/students/${id}`);
+const remove = (id) => {
+  return http.delete(`/pets/${id}`);
 };
 
 const removeAll = () => {
-  return http.delete(`/students`);
+  return http.delete(`/pets`);
 };
 
-const findByFirstName = firstName => {
-  return http.get(`/students?firstName=${firstName}`);
+const findByFirstName = (firstName) => {
+  return http.get(`/pets?firstName=${firstName}`);
 };
 
 export default {
@@ -38,5 +35,5 @@ export default {
   update,
   remove,
   removeAll,
-  findByFirstName: findByFirstName
+  findByFirstName: findByFirstName,
 };

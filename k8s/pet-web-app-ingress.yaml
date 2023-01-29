@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pet-web-app-ingress
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: /abc
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pet-web-app-service
+                port:
+                  number: 80
