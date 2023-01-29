@@ -1,62 +1,62 @@
 import React, { useState, useEffect } from "react";
-import TutorialDataService from "../services/StudentService";
+import TutorialDataService from "../services/petService";
 import { Link } from "react-router-dom";
 
-const StudentList = () => {
-  const [students, setStudents] = useState([]);
-  const [currentStudent, setCurrentStudent] = useState(null);
+const PetList = () => {
+  const [Pets, setPets] = useState([]);
+  const [currentPet, setCurrentPet] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [searchFirstName, setSearchFirstName] = useState("");
 
   useEffect(() => {
-    retrieveStudents();
+    retrievePets();
   }, []);
 
-  const onChangeSearchFirstName = e => {
+  const onChangeSearchFirstName = (e) => {
     const searchTitle = e.target.value;
     setSearchFirstName(searchTitle);
   };
 
-  const retrieveStudents = () => {
+  const retrievePets = () => {
     TutorialDataService.getAll()
-      .then(response => {
-        setStudents(response.data);
+      .then((response) => {
+        setPets(response.data);
         console.log(response.data);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   };
 
   const refreshList = () => {
-    retrieveStudents();
-    setCurrentStudent(null);
+    retrievePets();
+    setCurrentPet(null);
     setCurrentIndex(-1);
   };
 
-  const setActiveStudent = (student, index) => {
-    setCurrentStudent(student);
+  const setActivePet = (Pet, index) => {
+    setCurrentPet(Pet);
     setCurrentIndex(index);
   };
 
-  const removeAllStudents = () => {
+  const removeAllPets = () => {
     TutorialDataService.removeAll()
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         refreshList();
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   };
 
   const findByFirstName = () => {
     TutorialDataService.findByFirstName(searchFirstName)
-      .then(response => {
-        setStudents(response.data);
+      .then((response) => {
+        setPets(response.data);
         console.log(response.data);
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
       });
   };
@@ -84,58 +84,52 @@ const StudentList = () => {
         </div>
       </div>
       <div className="col-md-6">
-        <h4>Student List</h4>
+        <h4>Pet List</h4>
 
         <ul className="list-group">
-          {students &&
-            students.map((student, index) => (
+          {Pets &&
+            Pets.map((Pet, index) => (
               <li
                 className={
                   "list-group-item " + (index === currentIndex ? "active" : "")
                 }
-                onClick={() => setActiveStudent(student, index)}
+                onClick={() => setActivePet(Pet, index)}
                 key={index}
               >
-                {student.firstName}
+                {Pet.firstName}
               </li>
             ))}
         </ul>
 
-        <button
-          className="m-3 btn btn-sm btn-danger"
-          onClick={removeAllStudents}
-        >
+        <button className="m-3 btn btn-sm btn-danger" onClick={removeAllPets}>
           Remove All
         </button>
       </div>
       <div className="col-md-6">
-        {currentStudent ? (
+        {currentPet ? (
           <div>
-            <h4>Student</h4>
+            <h4>Pet</h4>
             <div>
               <label>
                 <strong>First Name:</strong>
               </label>{" "}
-              {currentStudent.firstName}
+              {currentPet.firstName}
             </div>
             <div>
               <label>
                 <strong>Last Name:</strong>
               </label>{" "}
-              {currentStudent.lastName}
+              {currentPet.lastName}
             </div>
 
-            <Link
-              to={"/students/" + currentStudent.id}
-              className="badge badge-warning"
-            >
+            <Link to={"/pets/" + currentPet.id} className="badge badge-warning">
               Edit
             </Link>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a Student...</p>
+            <p>Please click on a Pet...</p>
           </div>
         )}
       </div>
@@ -143,4 +137,4 @@ const StudentList = () => {
   );
 };
 
-export default StudentList;
+export default PetList;

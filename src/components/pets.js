@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-import TutorialDataService from "../services/StudentService";
+import TutorialDataService from "../services/petService";
 
-const Students = (props) => {
+const Pets = (props) => {
   const initialTutorialState = {
     id: null,
     firstName: "",
     lastName: "",
   };
-  const [currentStudent, setCurrentStudent] = useState(initialTutorialState);
+  const [currentPet, setCurrentPet] = useState(initialTutorialState);
   const [message, setMessage] = useState("");
 
-  const getStudent = (id) => {
+  const getPet = (id) => {
     console.log("Getting current studnet");
     TutorialDataService.get(id)
       .then((response) => {
         console.log(response);
-        setCurrentStudent(response.data);
+        setCurrentPet(response.data);
         console.log(response.data);
       })
       .catch((e) => {
@@ -24,30 +24,30 @@ const Students = (props) => {
   };
 
   useEffect(() => {
-    getStudent(props.match.params.id);
+    getPet(props.match.params.id);
   }, [props.match.params.id]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setCurrentStudent({ ...currentStudent, [name]: value });
+    setCurrentPet({ ...currentPet, [name]: value });
   };
 
-  const updateStudent = () => {
-    TutorialDataService.update(currentStudent.id, currentStudent)
+  const updatePet = () => {
+    TutorialDataService.update(currentPet.id, currentPet)
       .then((response) => {
         console.log(response.data);
-        setMessage("Student was updated successfully!");
+        setMessage("Pet was updated successfully!");
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-  const deleteStudent = () => {
-    TutorialDataService.remove(currentStudent.id)
+  const deletePet = () => {
+    TutorialDataService.remove(currentPet.id)
       .then((response) => {
         console.log(response.data);
-        props.history.push("/students");
+        props.history.push("/pets");
       })
       .catch((e) => {
         console.log(e);
@@ -56,9 +56,9 @@ const Students = (props) => {
 
   return (
     <div>
-      {currentStudent ? (
+      {currentPet ? (
         <div className="edit-form">
-          <h4>Students</h4>
+          <h4>Pets</h4>
           <form>
             <div className="form-group">
               <label htmlFor="title">First Name</label>
@@ -67,7 +67,7 @@ const Students = (props) => {
                 className="form-control"
                 id="firstName"
                 name="firstName"
-                value={currentStudent.firstName}
+                value={currentPet.firstName}
                 onChange={handleInputChange}
               />
             </div>
@@ -78,20 +78,20 @@ const Students = (props) => {
                 className="form-control"
                 id="lastName"
                 name="lastName"
-                value={currentStudent.lastName}
+                value={currentPet.lastName}
                 onChange={handleInputChange}
               />
             </div>
           </form>
 
-          <button className="badge badge-danger mr-2" onClick={deleteStudent}>
+          <button className="badge badge-danger mr-2" onClick={deletePet}>
             Delete
           </button>
 
           <button
             type="submit"
             className="badge badge-success"
-            onClick={updateStudent}
+            onClick={updatePet}
           >
             Update
           </button>
@@ -100,11 +100,11 @@ const Students = (props) => {
       ) : (
         <div>
           <br />
-          <p>Please click on a Student...</p>
+          <p>Please click on a Pet...</p>
         </div>
       )}
     </div>
   );
 };
 
-export default Students;
+export default Pets;

@@ -1,6 +1,6 @@
 import http from "../http-common";
 const getAll = () => {
-  console.log(process.env.REACT_APP_STUDENT_APP_API_URL);
+  console.log(process.env.REACT_APP_Pet_APP_API_URL);
   return http.get(`/pets`);
 };
 
