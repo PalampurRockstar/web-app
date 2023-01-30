@@ -1,18 +1,21 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import PetList from "./components/petList";
+import AddPet from "./components/addPet";
+import Pets from "./components/pets";
 
-import AddPet from "./components/AddPet";
-import Pets from "./components/Pets";
-import PetList from "./components/PetList";
+// import AddPet from "./components/AddPet";
+// import Pets from "./components/Pets";
+// import PetList from "./components/PetList";
 
 function App() {
   const Home = () => {
     return <h3>Welcome to the app</h3>;
   };
   return (
-    <Router>
+    <BrowserRouter>
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <a href="/pets" className="navbar-brand">
@@ -41,7 +44,7 @@ function App() {
           </Switch>
         </div>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
