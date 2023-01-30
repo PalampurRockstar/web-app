@@ -10,7 +10,7 @@ const AddPet = () => {
   const [Pet, setPet] = useState(initialPetState);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: any) => {
     const { name, value } = event.target;
     setPet({ ...Pet, [name]: value });
   };
@@ -22,7 +22,7 @@ const AddPet = () => {
     };
 
     TutorialDataService.create(data)
-      .then((response) => {
+      .then((response: any) => {
         setPet({
           id: response.data.id,
           firstName: response.data.firstName,
@@ -31,7 +31,7 @@ const AddPet = () => {
         setSubmitted(true);
         console.log(response.data);
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.log(e);
       });
   };

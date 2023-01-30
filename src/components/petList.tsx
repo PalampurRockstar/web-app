@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const PetList = () => {
   const [Pets, setPets] = useState([]);
-  const [currentPet, setCurrentPet] = useState(null);
+  const [currentPet, setCurrentPet] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [searchFirstName, setSearchFirstName] = useState("");
 
@@ -12,18 +12,18 @@ const PetList = () => {
     retrievePets();
   }, []);
 
-  const onChangeSearchFirstName = (e) => {
+  const onChangeSearchFirstName = (e: any) => {
     const searchTitle = e.target.value;
     setSearchFirstName(searchTitle);
   };
 
   const retrievePets = () => {
     TutorialDataService.getAll()
-      .then((response) => {
+      .then((response: any) => {
         setPets(response.data);
         console.log(response.data);
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.log(e);
       });
   };
@@ -34,29 +34,29 @@ const PetList = () => {
     setCurrentIndex(-1);
   };
 
-  const setActivePet = (Pet, index) => {
+  const setActivePet = (Pet: any, index: any) => {
     setCurrentPet(Pet);
     setCurrentIndex(index);
   };
 
   const removeAllPets = () => {
     TutorialDataService.removeAll()
-      .then((response) => {
+      .then((response: any) => {
         console.log(response.data);
         refreshList();
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.log(e);
       });
   };
 
   const findByFirstName = () => {
     TutorialDataService.findByFirstName(searchFirstName)
-      .then((response) => {
+      .then((response: any) => {
         setPets(response.data);
         console.log(response.data);
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.log(e);
       });
   };
@@ -88,7 +88,7 @@ const PetList = () => {
 
         <ul className="list-group">
           {Pets &&
-            Pets.map((Pet, index) => (
+            Pets.map((Pet: any, index) => (
               <li
                 className={
                   "list-group-item " + (index === currentIndex ? "active" : "")

@@ -1,14 +1,10 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import PetList from "./components/petList";
 import AddPet from "./components/addPet";
 import Pets from "./components/pets";
-
-// import AddPet from "./components/AddPet";
-// import Pets from "./components/Pets";
-// import PetList from "./components/PetList";
 
 function App() {
   const Home = () => {
@@ -36,12 +32,12 @@ function App() {
         </nav>
 
         <div className="container mt-3">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path={["/", "/pets"]} component={PetList} />
-            <Route exact path="/add" component={AddPet} />
-            <Route path="/pets/:id" component={Pets} />
-          </Switch>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/pets" element={<PetList />} />
+            <Route path="/add" element={<AddPet />} />
+            <Route path="/pets/:id" element={<Pets />} />
+          </Routes>
         </div>
       </div>
     </BrowserRouter>

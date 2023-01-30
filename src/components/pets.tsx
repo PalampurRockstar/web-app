@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TutorialDataService from "../services/petService";
 
-const Pets = (props) => {
+const Pets = (props: any) => {
   const initialTutorialState = {
     id: null,
     firstName: "",
@@ -10,15 +10,15 @@ const Pets = (props) => {
   const [currentPet, setCurrentPet] = useState(initialTutorialState);
   const [message, setMessage] = useState("");
 
-  const getPet = (id) => {
+  const getPet = (id: any) => {
     console.log("Getting current studnet");
     TutorialDataService.get(id)
-      .then((response) => {
+      .then((response: any) => {
         console.log(response);
         setCurrentPet(response.data);
         console.log(response.data);
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.log(e);
       });
   };
@@ -27,29 +27,29 @@ const Pets = (props) => {
     getPet(props.match.params.id);
   }, [props.match.params.id]);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: any) => {
     const { name, value } = event.target;
     setCurrentPet({ ...currentPet, [name]: value });
   };
 
   const updatePet = () => {
     TutorialDataService.update(currentPet.id, currentPet)
-      .then((response) => {
+      .then((response: any) => {
         console.log(response.data);
         setMessage("Pet was updated successfully!");
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.log(e);
       });
   };
 
   const deletePet = () => {
     TutorialDataService.remove(currentPet.id)
-      .then((response) => {
+      .then((response: any) => {
         console.log(response.data);
         props.history.push("/pets");
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.log(e);
       });
   };
