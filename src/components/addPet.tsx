@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TutorialDataService from "../services/petService";
+import TutorialDataService from "services/petService";
 
 const AddPet = () => {
   const initialPetState = {

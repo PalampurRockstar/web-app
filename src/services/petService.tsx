@@ -1,4 +1,12 @@
-import http from "./http-common";
+import axios from "axios";
+
+const http = axios.create({
+  baseURL: "http://34.117.217.185/pet-onboarding",
+  headers: {
+    "Content-type": "application/json",
+  },
+});
+
 const getAll = () => {
   console.log(process.env.REACT_APP_Pet_APP_API_URL);
   return http.get(`/pets`);

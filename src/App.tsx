@@ -1,11 +1,10 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import "./App.css";
-import PetList from "./components/petList";
-import AddPet from "./components/addPet";
-import Pets from "./components/pets";
+import "./style/common.css";
 import Home from "pages/home";
+import Pets from "components/pets";
+import PetList from "components/petList";
+import AddPet from "components/addPet";
 
 const App = () => {
   return (

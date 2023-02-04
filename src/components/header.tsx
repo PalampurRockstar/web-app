@@ -9,12 +9,12 @@ import {
   Divider,
   Row,
   Image,
+  Button,
 } from "antd";
-import SourabhProfile from "../assets/sourabh.jpg";
 
 import { MenuItems } from "store/items";
-import { HeaderRow, StyleProp, useStyles } from "../style/components/header";
-import "../style/components/header.css";
+import { ButtonSetCol, HeaderRow } from "style/components/header";
+import { useStyles } from "style/common";
 const { Header, Content, Footer } = Layout;
 
 const AppHeader = () => {
@@ -22,7 +22,7 @@ const AppHeader = () => {
   return (
     <Header className={classes.app_header}>
       <HeaderRow>
-        <Col flex={9}>
+        <Col flex={"60%"}>
           <div
             style={{
               float: "left",
@@ -34,14 +34,19 @@ const AppHeader = () => {
             PetApp
           </div>
         </Col>
-        <Col flex={3}>
+        <ButtonSetCol flex={"20%"}>
+          <div className="">
+            <Button>Become a seller</Button>
+          </div>
+        </ButtonSetCol>
+        <Col flex={"20%"}>
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={["2"]}
+            // defaultSelectedKeys={["2"]}
             items={MenuItems.map((each, index) => ({
               key: index,
-              label: each.name,
+
               icon: each.icon,
             }))}
           />

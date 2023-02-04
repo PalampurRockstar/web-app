@@ -4,22 +4,19 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import SourabhProfile from "../assets/sourabh.jpg";
-import "../";
+import "../style/components/items.css";
 import { Image } from "antd";
 export const MenuItems = [
   {
-    name: "Message",
     icon: <MessageOutlined />,
   },
   {
-    name: "Notification",
     icon: <BellOutlined />,
   },
   {
-    name: "Cart",
     icon: <ShoppingCartOutlined />,
   },
   {
-    icon: <Image width={"30px"} src={SourabhProfile} />,
+    icon: <Image className="custom-avt" width={"30px"} src={SourabhProfile} />,
   },
 ];
