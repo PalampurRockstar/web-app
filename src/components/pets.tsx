@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import TutorialDataService from "../services/petService";
 
 const Pets = (props: any) => {

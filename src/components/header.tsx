@@ -1,58 +1,42 @@
-import { Link } from "react-router-dom";
-
-import {
-  Breadcrumb,
-  Layout,
-  Menu,
-  theme,
-  Col,
-  Divider,
-  Row,
-  Image,
-  Button,
-} from "antd";
-
+import { Button, Col, Layout, Menu, theme } from "antd";
 import { MenuItems } from "store/items";
-import { ButtonSetCol, HeaderRow } from "style/components/header";
-import { useStyles } from "style/common";
+import { useStyles } from "style/common-style";
+import {
+  ButtonSetCol,
+  HeaderContent,
+  HeaderRow,
+} from "style/components/header-style";
 const { Header, Content, Footer } = Layout;
 
 const AppHeader = () => {
+  const {
+    token: { colorBgContainer, lineHeight },
+  } = theme.useToken();
   const classes = useStyles();
   return (
-    <Header className={classes.app_header}>
+    <HeaderContent style={{ background: colorBgContainer }}>
       <HeaderRow>
-        <Col flex={"60%"}>
-          <div
-            style={{
-              float: "left",
-              width: 120,
-              height: 31,
-              color: "white",
-            }}
-          >
-            PetApp
-          </div>
+        <Col>
+          <div>PetApp</div>
         </Col>
-        <ButtonSetCol flex={"20%"}>
-          <div className="">
-            <Button>Become a seller</Button>
-          </div>
-        </ButtonSetCol>
-        <Col flex={"20%"}>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            // defaultSelectedKeys={["2"]}
-            items={MenuItems.map((each, index) => ({
-              key: index,
-
-              icon: each.icon,
-            }))}
-          />
+        <Col>
+          <ButtonSetCol>
+            <div>
+              <Button>Become a seller</Button>
+            </div>
+          </ButtonSetCol>
+          <ButtonSetCol>
+            <Menu
+              mode="horizontal"
+              items={MenuItems.map((each, index) => ({
+                key: index,
+                icon: each.icon,
+              }))}
+            />
+          </ButtonSetCol>
         </Col>
       </HeaderRow>
-    </Header>
+    </HeaderContent>
   );
 };
 

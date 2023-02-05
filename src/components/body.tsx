@@ -1,25 +1,42 @@
-import { Link } from "react-router-dom";
-
-import { Breadcrumb, Layout, Menu, theme, Image } from "antd";
+import { Input, Layout, Select, theme, Image, Divider } from "antd";
+import {
+  BodyContent,
+  LandingPageImage,
+  LocationGroup,
+} from "style/components/body-style";
+import LandingPageImagePath from "../assets/images/landing.jpg";
+import SearchIcon from "../assets/icons/search.svg";
+import { useStyles } from "style/common-style";
+import classNames from "classnames";
+import { SearchOutlined } from "@ant-design/icons";
 const { Header, Content, Footer } = Layout;
+const { Search, Group } = Input;
+const { Option } = Select;
 const AppBody = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  return (
-    <Content className="site-layout" style={{ padding: "0 50px" }}>
-      <Breadcrumb style={{ margin: "16px 0" }}>
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>List</Breadcrumb.Item>
-        <Breadcrumb.Item>App</Breadcrumb.Item>
-      </Breadcrumb>
+  const classes = useStyles();
 
-      <div
-        style={{ padding: 24, height: "100%", background: colorBgContainer }}
-      >
-        Content
+  return (
+    <BodyContent>
+      <LandingPageImage preview={false} src={LandingPageImagePath} />
+      <div className={classNames(classes.display_text)}>
+        Search for all kind of pet from verified sellers in Thailand
       </div>
-    </Content>
+      <Divider type="vertical" />
+      <LocationGroup compact>
+        <Select placeholder="All Locations">
+          <Option value="Option1">Option1</Option>
+          <Option value="Option2">Option2</Option>
+        </Select>
+        <Search
+          placeholder="Which pet are you looking for?"
+          allowClear
+          onAnimationStart={() => {}}
+        />
+      </LocationGroup>
+    </BodyContent>
   );
 };
 

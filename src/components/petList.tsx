@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import TutorialDataService from "../services/petService";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import TutorialDataService from "../services/petService";
 
 const PetList = () => {
   const [Pets, setPets] = useState([]);
