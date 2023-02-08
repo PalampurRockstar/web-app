@@ -26,21 +26,23 @@ export const IconSlider = ({ displaySize, list }: IconSliderProp) => {
         {each.icon}
       </Button>
     ));
-  const moveRight = () => {
-    changePointer((p) => {
-      return p - 1 >= 0 ? p - 1 : p;
-    });
-  };
-  const moveLeft = () => {
-    changePointer((p) => {
-      return p + 1 < iconList.length - displaySize ? p + 1 : p;
-    });
-  };
+  const moveRight = () => changePointer((p) => (p - 1 >= 0 ? p - 1 : p));
+  const moveLeft = () =>
+    changePointer((p) => (p + 1 < iconList.length - displaySize ? p + 1 : p));
+
   return (
     <DIV>
-      <Button icon={<LeftCircleOutlined />} onClick={moveRight} />
+      <Button
+        icon={<LeftCircleOutlined />}
+        onClick={moveRight}
+        disabled={pointer == 0}
+      />
       {finalList()}
-      <Button icon={<RightCircleOutlined />} onClick={moveLeft} />
+      <Button
+        icon={<RightCircleOutlined />}
+        onClick={moveLeft}
+        disabled={pointer === iconList.length - displaySize - 1}
+      />
     </DIV>
   );
 };

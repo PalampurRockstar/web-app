@@ -11,3 +11,10 @@ export const SIZING = {
   X4L: "40px",
   X5L: "48px",
 };
+
+export type CurrencyCode = { [n: string]: string };
+export const currencyCode: CurrencyCode = {
+  THB: "\u0E3F",
+  INR: "\u20B9",
+  DOLLAR: "\u0024",
+};
