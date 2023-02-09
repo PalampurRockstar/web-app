@@ -30,6 +30,7 @@ const single: PetProp = {
   type: "cat",
   image: "",
   gender: "male",
+  rating: 3,
   price: {
     amount: 3422,
     currencyCode: "INR",

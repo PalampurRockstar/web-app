@@ -1,10 +1,13 @@
 import styled from "styled-components";
-import { Image } from "antd";
+import { Image, Rate } from "antd";
 import { initCap, titleCase } from "utils/stringFormatter";
 import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
 import { CurrencyCode, currencyCode } from "common/constants";
 import { favouriteList } from "store/pets";
-import { HeartOutlined } from "@ant-design/icons";
+import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
+import { red } from "@mui/material/colors";
+import React from "react";
+import { AntdIconProps } from "@ant-design/icons/lib/components/AntdIcon";
 type Gender = "male" | "female";
 export interface PetProp {
   id: string;
@@ -17,6 +20,7 @@ export interface PetProp {
   breader: BreaderProp;
   location: LocatoinProp;
   image: string;
+  rating: number;
 }
 
 interface BreaderProp {
@@ -45,22 +49,48 @@ interface PriceProp {
 interface PetShowProp {
   petlist: PetProp[];
 }
-
+interface FavIconProp {
+  each: PetProp;
+}
+const FavouriteIcon = ({ each }: FavIconProp) => {
+  const [isFav, setIsFav] = React.useState<boolean>(isHidden(each.id));
+  const prop = {
+    twoToneColor: "#f79999",
+    className: "favourite",
+    style: {
+      color: "#f79999",
+    } as React.CSSProperties,
+  };
+  const toggle = () => setIsFav((b) => !b);
+  return isFav ? (
+    <HeartFilled {...prop} onClick={toggle} />
+  ) : (
+    <HeartTwoTone {...prop} onClick={toggle} />
+  );
+};
+const isHidden = (id: string) => favouriteList.has(id);
 export const PetShow = ({ petlist }: PetShowProp) => {
-  const isHidden = (id: string) => !favouriteList.has(id);
-  console.log(favouriteList);
+  const rating = (rating: number) => {
+    return (
+      <Rate
+        className="rating"
+        allowHalf
+        defaultValue={rating >= 0 && rating <= 5 ? rating : 1}
+        style={{ fontSize: 11 }}
+      />
+    );
+  };
   return (
     <DIV>
       {petlist.map((each, i) => {
         return (
           <div className="each-pet" key={i}>
-            <HeartOutlined
-              className="favourite"
-              style={{ visibility: isHidden(each.id) ? "hidden" : "visible" }}
-            />
             <Image src={each.image} preview={false} />
             <div className="detail-box">
-              <div className="title">{initCap(each.title)}</div>
+              <div className="title-and-fav">
+                <div className="title">{initCap(each.title)}</div>
+                <FavouriteIcon each={each} />
+              </div>
               <div className="bread-and-gender">
                 {initCap(`${each.bread} • ${each.gender}`)}
               </div>
@@ -72,8 +102,11 @@ export const PetShow = ({ petlist }: PetShowProp) => {
                 />
                 {each.location.name}
               </div>
-              <div className="price">
-                {currencyCode[each.price.currencyCode]} {each.price.amount}
+              <div className="price-and-rating">
+                <div className="price">
+                  {currencyCode[each.price.currencyCode]} {each.price.amount}{" "}
+                </div>
+                {rating(each.rating)}
               </div>
             </div>
           </div>
@@ -88,26 +121,27 @@ const DIV = styled.div`
   margin: auto;
   flex-wrap: wrap;
   .each-pet {
-    .favourite {
-      height: 0px;
-      font-size: 30px;
-      position: relative;
-      top: 40px;
-      z-index: 1;
-      left: 112px;
-      color: #fcfcfd;
-    }
     width: 150px;
     padding: 10px;
     flex-grow: 1;
     .detail-box {
       padding: 8px;
-      .title {
+      .title-and-fav {
+        display: flex;
+        justify-content: space-between;
         color: #344054;
         font-family: "Poppins";
         font-style: normal;
         font-weight: 500;
         font-size: 18px;
+        .favourite {
+          height: 0px;
+          font-size: 20px;
+          position: relative;
+          bottom: 24px;
+          z-index: 1;
+          filter: blur(0.5px);
+        }
       }
       .bread-and-gender {
         font-family: "Poppins";
@@ -124,7 +158,14 @@ const DIV = styled.div`
         right: 3px;
         color: #667085;
       }
-      .price {
+      .price-and-rating {
+        display: flex;
+        justify-content: space-between;
+        .rating {
+          li {
+            margin-inline-end: 1px;
+          }
+        }
         font-family: "Poppins";
         font-style: normal;
         font-weight: 600;
