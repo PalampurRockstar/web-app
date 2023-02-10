@@ -1,13 +1,11 @@
-import styled from "styled-components";
+import { HeartFilled, HeartTwoTone } from "@ant-design/icons";
 import { Image, Rate } from "antd";
-import { initCap, titleCase } from "utils/stringFormatter";
-import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
 import { CurrencyCode, currencyCode } from "common/constants";
-import { favouriteList } from "store/pets";
-import { HeartOutlined, HeartFilled, HeartTwoTone } from "@ant-design/icons";
-import { red } from "@mui/material/colors";
 import React from "react";
-import { AntdIconProps } from "@ant-design/icons/lib/components/AntdIcon";
+import { favouriteList } from "store/pets";
+import styled from "styled-components";
+import { initCap } from "utils/stringFormatter";
+import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
 type Gender = "male" | "female";
 export interface PetProp {
   id: string;
@@ -130,7 +128,7 @@ const DIV = styled.div`
         display: flex;
         justify-content: space-between;
         color: #344054;
-        font-family: "Poppins";
+
         font-style: normal;
         font-weight: 500;
         font-size: 18px;
@@ -144,7 +142,6 @@ const DIV = styled.div`
         }
       }
       .bread-and-gender {
-        font-family: "Poppins";
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
@@ -166,7 +163,7 @@ const DIV = styled.div`
             margin-inline-end: 1px;
           }
         }
-        font-family: "Poppins";
+
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
