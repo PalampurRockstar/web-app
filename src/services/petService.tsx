@@ -8,8 +8,7 @@ const http = axios.create({
 });
 
 const getAll = () => {
-  console.log(process.env.REACT_APP_Pet_APP_API_URL);
-  return http.get(`/pets`);
+  return http.get(`/pet`);
 };
 
 const get = (id: any) => {

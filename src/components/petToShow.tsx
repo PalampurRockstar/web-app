@@ -9,19 +9,19 @@ import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.sv
 type Gender = "male" | "female";
 export interface PetProp {
   id: string;
-  bread: string;
+  breed: string;
   gender: Gender;
   title: string;
   type_code: string;
   type: string;
   price: PriceProp;
-  breader: BreaderProp;
+  breeder: breederProp;
   location: LocatoinProp;
   image: string;
   rating: number;
 }
 
-interface BreaderProp {
+interface breederProp {
   name: string;
   code: string;
   location: LocatoinProp;
@@ -30,7 +30,7 @@ interface BreaderProp {
 interface LocatoinProp {
   name: string;
   longitude: string;
-  latitide: string;
+  latitude: string;
   address: AddressProp;
 }
 
@@ -89,8 +89,8 @@ export const PetShow = ({ petlist }: PetShowProp) => {
                 <div className="title">{initCap(each.title)}</div>
                 <FavouriteIcon each={each} />
               </div>
-              <div className="bread-and-gender">
-                {initCap(`${each.bread} • ${each.gender}`)}
+              <div className="breed-and-gender">
+                {initCap(`${each.breed} • ${each.gender}`)}
               </div>
               <div>
                 <LocationIcon
@@ -119,7 +119,7 @@ const DIV = styled.div`
   margin: auto;
   flex-wrap: wrap;
   .each-pet {
-    width: 150px;
+    width: 270px;
     padding: 10px;
     flex-grow: 1;
     .detail-box {
@@ -141,7 +141,7 @@ const DIV = styled.div`
           filter: blur(0.5px);
         }
       }
-      .bread-and-gender {
+      .breed-and-gender {
         font-style: normal;
         font-weight: 400;
         font-size: 14px;

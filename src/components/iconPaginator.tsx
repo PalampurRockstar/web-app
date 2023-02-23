@@ -28,8 +28,8 @@ export const IconSlider = ({ displaySize, list }: IconSliderProp) => {
     ));
   const moveRight = () => changePointer((p) => (p - 1 >= 0 ? p - 1 : p));
   const moveLeft = () =>
-    changePointer((p) => (p + 1 < iconList.length - displaySize ? p + 1 : p));
-
+    changePointer((p) => (p < iconList.length - displaySize ? p + 1 : p));
+  console.log(pointer);
   return (
     <DIV>
       <Button
@@ -41,7 +41,7 @@ export const IconSlider = ({ displaySize, list }: IconSliderProp) => {
       <Button
         icon={<RightCircleOutlined />}
         onClick={moveLeft}
-        disabled={pointer === iconList.length - displaySize - 1}
+        disabled={pointer === iconList.length - displaySize}
       />
     </DIV>
   );

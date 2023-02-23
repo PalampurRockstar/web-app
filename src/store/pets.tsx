@@ -1,7 +1,7 @@
 import { PetProp } from "components/petToShow";
 import { zeroPad } from "utils/stringFormatter";
 
-const importAll = (require) =>
+export const importAll = (require) =>
   require.keys().reduce((acc, next) => {
     acc[next.replace("./", "")] = require(next);
     return acc;
@@ -17,14 +17,14 @@ declare global {
   }
 }
 
-const images: string[] = Object.values(
+export const petImages: string[] = Object.values(
   importAll(
     require.context("../assets/images/pet-show", false, /\.(png|jpe?g|svg)$/)
   )
 );
 const single: PetProp = {
   id: "P001",
-  bread: "Beagle",
+  breed: "Beagle",
   title: "pet title",
   type_code: "",
   type: "cat",
@@ -35,13 +35,13 @@ const single: PetProp = {
     amount: 3422,
     currencyCode: "INR",
   },
-  breader: {
+  breeder: {
     name: "Alfard",
     code: "B001",
     location: {
       name: "Bangkok",
       longitude: "",
-      latitide: "",
+      latitude: "",
       address: {
         street: "",
         pin: "",
@@ -51,7 +51,7 @@ const single: PetProp = {
   location: {
     name: "Bangkok",
     longitude: "",
-    latitide: "",
+    latitude: "",
     address: {
       street: "",
       pin: "",
@@ -65,7 +65,7 @@ export const petList: PetProp[] = Array(30)
     return {
       ...each,
       id: `P${zeroPad(i, 3)}`,
-      image: images[i % images.length],
+      image: petImages[i % petImages.length],
     };
   });
 
