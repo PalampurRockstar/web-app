@@ -1,4 +1,3 @@
-import { Input, Layout, Select, theme } from "antd";
 import classNames from "classnames";
 import React from "react";
 import Service from "services/petService";
@@ -9,7 +8,7 @@ import { BodyContent, LandingPageImage } from "style/components/body-style";
 import LandingPageImagePath from "../assets/images/landing.jpg";
 import { IconSlider } from "./iconPaginator";
 import { LocationSelector } from "./LocationSelector";
-import { PetProp, PetShow } from "./petToShow";
+import { PetProp, PetShow, SearchCriteria } from "./petToShow";
 
 const TitleText = () => {
   const classes = useStyles();
@@ -21,14 +20,15 @@ const TitleText = () => {
 };
 const AppBody = () => {
   const [petList, setPetList] = React.useState<PetProp[]>([]);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const [criteria, setCriteria] = React.useState<SearchCriteria>(
+    {} as SearchCriteria
+  );
+
   React.useEffect(() => {
-    reloadPetList();
-  }, []);
-  const reloadPetList = () => {
-    Service.getAll()
+    reloadPetList(criteria);
+  }, [criteria]);
+  const reloadPetList = (criteria: SearchCriteria) => {
+    Service.searchPets(criteria)
       .then((response: any) => {
         const responsePetList = response.data as PetProp[];
         setPetList(
@@ -49,8 +49,21 @@ const AppBody = () => {
     <BodyContent>
       <LandingPageImage preview={false} src={LandingPageImagePath} />
       <TitleText />
-      <LocationSelector />
-      <IconSlider displaySize={8} list={iconList} />
+      <LocationSelector
+        locationSearched={(value) =>
+          setCriteria((c) => ({ ...c, location: value }))
+        }
+        locationSelected={(value) =>
+          setCriteria((c) => ({ ...c, location: value }))
+        }
+      />
+      <IconSlider
+        displaySize={8}
+        list={iconList}
+        selectedIcon={(value) => {
+          setCriteria((c) => ({ ...c, type: value }));
+        }}
+      />
       <PetShow petlist={petList} />
     </BodyContent>
   );

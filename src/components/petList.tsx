@@ -18,7 +18,7 @@ const PetList = () => {
   };
 
   const retrievePets = () => {
-    TutorialDataService.getAll()
+    TutorialDataService.getAllPets()
       .then((response: any) => {
         setPets(response.data);
         console.log(response.data);

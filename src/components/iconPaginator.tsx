@@ -12,9 +12,14 @@ export interface IconProp {
 interface IconSliderProp {
   displaySize: number;
   list: IconProp[];
+  selectedIcon: (name: string) => void;
 }
 
-export const IconSlider = ({ displaySize, list }: IconSliderProp) => {
+export const IconSlider = ({
+  displaySize,
+  list,
+  selectedIcon,
+}: IconSliderProp) => {
   const [pointer, changePointer] = React.useState<number>(0);
   const iconList = list;
   const finalList = () =>
@@ -22,20 +27,23 @@ export const IconSlider = ({ displaySize, list }: IconSliderProp) => {
       ? iconList.slice(pointer, pointer + displaySize)
       : iconList
     ).map((each, i) => (
-      <Button key={i} className="each-icon">
+      <Button
+        key={i}
+        className="each-icon"
+        onClick={() => selectedIcon(each.name)}
+      >
         {each.icon}
       </Button>
     ));
   const moveRight = () => changePointer((p) => (p - 1 >= 0 ? p - 1 : p));
   const moveLeft = () =>
     changePointer((p) => (p < iconList.length - displaySize ? p + 1 : p));
-  console.log(pointer);
   return (
     <DIV>
       <Button
         icon={<LeftCircleOutlined />}
         onClick={moveRight}
-        disabled={pointer == 0}
+        disabled={pointer === 0}
       />
       {finalList()}
       <Button

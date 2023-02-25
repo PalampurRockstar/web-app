@@ -1,22 +1,59 @@
-import { Input, Layout, Select } from "antd";
+import { Input, Select } from "antd";
 import { SIZING } from "common/constants";
+import React from "react";
+import Service from "services/petService";
 import styled from "styled-components";
-const { Header, Content, Footer } = Layout;
-const { Search, Group } = Input;
+import { LocatoinProp } from "./petToShow";
+const { Search } = Input;
 const { Option } = Select;
-export const LocationSelector = () => (
-  <LocationGroup compact>
-    <Select placeholder="All Locations">
-      <Option value="Option1">Option1</Option>
-      <Option value="Option2">Option2</Option>
-    </Select>
-    <Search
-      placeholder="Which pet are you looking for?"
-      allowClear
-      onAnimationStart={() => {}}
-    />
-  </LocationGroup>
-);
+
+export interface LocationSelectorProp {
+  locationSelected: (value: string) => void;
+  locationSearched: (value: string) => void;
+}
+export const LocationSelector = ({
+  locationSelected,
+  locationSearched,
+}: LocationSelectorProp) => {
+  const [locationList, setLocationList] = React.useState<string[]>([]);
+  React.useEffect(() => {
+    getAllLocations();
+  }, []);
+  const getAllLocations = () => {
+    Service.getAllLocations()
+      .then((response: any) => {
+        const responsePetList = (response.data as LocatoinProp[]).map(
+          (each) => each.name
+        );
+        const uniqueLocations = responsePetList.filter(function (item, pos) {
+          return responsePetList.indexOf(item) === pos;
+        });
+        console.log("uniqueLocations : ", uniqueLocations);
+        setLocationList(uniqueLocations);
+        console.log(response.data);
+      })
+      .catch((e: any) => {
+        console.log(e);
+      });
+  };
+  return (
+    <LocationGroup compact>
+      <Select placeholder="All Locations" onChange={locationSelected}>
+        {locationList.map((e, i) => (
+          <Option key={i} value={e}>
+            {e}
+          </Option>
+        ))}
+      </Select>
+      <Search
+        placeholder="Which pet are you looking for?"
+        allowClear
+        onAnimationStart={() => {}}
+        onSearch={locationSearched}
+      />
+    </LocationGroup>
+  );
+};
 
 export const LocationGroup = styled(Input.Group)`
   padding: 16px 0px;
