@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { PetProp, SearchCriteria } from "models/model";
 import React from "react";
 import Service from "services/petService";
 import { iconList } from "store/icons";
@@ -8,7 +9,7 @@ import { BodyContent, LandingPageImage } from "style/components/body-style";
 import LandingPageImagePath from "../assets/images/landing.jpg";
 import { IconSlider } from "./iconPaginator";
 import { LocationSelector } from "./LocationSelector";
-import { PetProp, PetShow, SearchCriteria } from "./petToShow";
+import { PetShow } from "./petToShow";
 
 const TitleText = () => {
   const classes = useStyles();
@@ -18,7 +19,7 @@ const TitleText = () => {
     </div>
   );
 };
-const AppBody = () => {
+const Home = () => {
   const [petList, setPetList] = React.useState<PetProp[]>([]);
   const [criteria, setCriteria] = React.useState<SearchCriteria>(
     {} as SearchCriteria
@@ -69,4 +70,4 @@ const AppBody = () => {
   );
 };
 
-export default AppBody;
+export default Home;

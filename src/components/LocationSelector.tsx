@@ -1,9 +1,10 @@
 import { Input, Select } from "antd";
 import { SIZING } from "common/constants";
+import { LocatoinProp } from "models/model";
 import React from "react";
 import Service from "services/petService";
 import styled from "styled-components";
-import { LocatoinProp } from "./petToShow";
+
 const { Search } = Input;
 const { Option } = Select;
 

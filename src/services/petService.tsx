@@ -18,8 +18,8 @@ const searchPets = (data: any) => {
 const getAllLocations = () => {
   return http.get(`/location`);
 };
-const get = (id: any) => {
-  return http.get(`/pets/${id}`);
+const getPet = (id: any) => {
+  return http.get(`/pet/${id}`);
 };
 
 const create = (data: any) => {
@@ -46,7 +46,7 @@ const Service = {
   getAllPets,
   getAllLocations,
   searchPets,
-  get,
+  getPet,
   create,
   update,
   remove,

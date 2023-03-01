@@ -12,7 +12,7 @@ const Pets = (props: any) => {
 
   const getPet = (id: any) => {
     console.log("Getting current studnet");
-    TutorialDataService.get(id)
+    TutorialDataService.getPet(id)
       .then((response: any) => {
         console.log(response);
         setCurrentPet(response.data);

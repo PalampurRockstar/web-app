@@ -1,67 +1,14 @@
 import { HeartFilled, HeartTwoTone } from "@ant-design/icons";
 import { Image, Rate } from "antd";
 import { CurrencyCode, currencyCode } from "common/constants";
+import { FavIconProp, PetShowProp } from "models/model";
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { favouriteList } from "store/pets";
 import styled from "styled-components";
 import { initCap } from "utils/stringFormatter";
 import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
-type Gender = "male" | "female";
 
-export interface SearchCriteria {
-  location: string;
-  breed: string;
-  gender: string;
-  type: string;
-  priceFilterd: {
-    from: number;
-    to: number;
-  };
-}
-
-export interface PetProp {
-  id: string;
-  breed: string;
-  gender: Gender;
-  title: string;
-  type_code: string;
-  type: string;
-  price: PriceProp;
-  breeder: breederProp;
-  location: LocatoinProp;
-  image: string;
-  rating: number;
-}
-
-export interface breederProp {
-  name: string;
-  code: string;
-  location: LocatoinProp;
-}
-
-export interface LocatoinProp {
-  name: string;
-  longitude: string;
-  latitude: string;
-  address: AddressProp;
-}
-
-interface AddressProp {
-  street: string;
-  pin: string;
-}
-
-interface PriceProp {
-  amount: number;
-  currencyCode: keyof CurrencyCode;
-}
-
-interface PetShowProp {
-  petlist: PetProp[];
-}
-interface FavIconProp {
-  each: PetProp;
-}
 const FavouriteIcon = ({ each }: FavIconProp) => {
   const [isFav, setIsFav] = React.useState<boolean>(isHidden(each.id));
   const prop = {
@@ -78,8 +25,13 @@ const FavouriteIcon = ({ each }: FavIconProp) => {
     <HeartTwoTone {...prop} onClick={toggle} />
   );
 };
+
 const isHidden = (id: string) => favouriteList.has(id);
 export const PetShow = ({ petlist }: PetShowProp) => {
+  const navigate = useNavigate();
+  const openDetail = (id: string) => {
+    navigate(`/detail?pet-id=${id}`);
+  };
   const rating = (rating: number) => {
     return (
       <Rate
@@ -90,6 +42,7 @@ export const PetShow = ({ petlist }: PetShowProp) => {
       />
     );
   };
+
   return (
     <DIV>
       <div className="pet-show">
@@ -99,10 +52,15 @@ export const PetShow = ({ petlist }: PetShowProp) => {
               <Image src={each.image} preview={false} />
               <div className="detail-box">
                 <div className="title-and-fav">
-                  <div className="title">{initCap(each.title)}</div>
+                  <div className="title" onClick={() => openDetail(each.id)}>
+                    {initCap(each.title)}
+                  </div>
                   <FavouriteIcon each={each} />
                 </div>
-                <div className="breed-and-gender">
+                <div
+                  className="breed-and-gender"
+                  onClick={() => openDetail(each.id)}
+                >
                   {initCap(`${each.breed} • ${each.gender}`)}
                 </div>
                 <div>
@@ -114,7 +72,7 @@ export const PetShow = ({ petlist }: PetShowProp) => {
                   {each.location.name}
                 </div>
                 <div className="price-and-rating">
-                  <div className="price">
+                  <div className="price" onClick={() => openDetail(each.id)}>
                     {currencyCode[each.price.currencyCode]} {each.price.amount}{" "}
                   </div>
                   {rating(each.rating)}
@@ -134,6 +92,12 @@ const DIV = styled.div`
     width: 80%;
     margin: auto;
     flex-wrap: wrap;
+    .title {
+      cursor: pointer;
+    }
+    .price {
+      cursor: pointer;
+    }
     .each-pet {
       width: 270px;
       max-width: 270px;
@@ -163,6 +127,7 @@ const DIV = styled.div`
           font-size: 14px;
           line-height: 22px;
           color: #667085;
+          cursor: pointer;
         }
         .location-icon {
           position: relative;

@@ -1,4 +1,4 @@
-import { PetProp } from "components/petToShow";
+import { DocumentProp, PetProp, Review } from "models/model";
 import { zeroPad } from "utils/stringFormatter";
 
 export const importAll = (require) =>
@@ -22,15 +22,30 @@ export const petImages: string[] = Object.values(
     require.context("../assets/images/pet-show", false, /\.(png|jpe?g|svg)$/)
   )
 );
-const single: PetProp = {
+export const single: PetProp = {
   id: "P001",
   breed: "Beagle",
-  title: "pet title",
+  title: "Adorable Silver Chinchilla Persian",
   type_code: "",
   type: "cat",
   image: "",
   gender: "male",
   rating: 3,
+  dob: "2023-01-28T16:44:03.520Z",
+  description:
+    "Lorem ipsum dolor sit amet consectetur. Feugiat eget ullamcorper aliquam lorem odio et cras ut vivamus. Non malesuada scelerisque sociis aliquam elit eget aliquam nam.",
+  documents: [
+    {
+      name: "Health certificate",
+      validUntil: "2023-01-28T16:44:03.520Z",
+      docNumber: "123333",
+    },
+    {
+      name: "Vaccine passport",
+      validUntil: "2023-01-29T16:44:03.520Z",
+      docNumber: "123333",
+    },
+  ],
   price: {
     amount: 3422,
     currencyCode: "INR",
@@ -47,6 +62,34 @@ const single: PetProp = {
         pin: "",
       },
     },
+    rating: 3,
+    images: [],
+    reviews: [
+      {
+        comment: "Breeder has good experience",
+        likeCount: 2,
+        disLikeCount: 3,
+        evidence: [
+          {
+            path: "some/path",
+            file: "image1.jpg",
+            cdn: "host1",
+          },
+        ],
+      },
+      {
+        comment: "All documents are prvided",
+        likeCount: 2,
+        disLikeCount: 3,
+        evidence: [
+          {
+            path: "some/path",
+            file: "image1.jpg",
+            cdn: "host1",
+          },
+        ],
+      },
+    ],
   },
   location: {
     name: "Bangkok",
@@ -57,6 +100,32 @@ const single: PetProp = {
       pin: "",
     },
   },
+  reviews: [
+    {
+      comment: "Hi",
+      likeCount: 1,
+      disLikeCount: 2,
+      evidence: [
+        {
+          path: "some/path",
+          file: "image1.jpg",
+          cdn: "host1",
+        },
+      ],
+    },
+  ],
+  images: [
+    {
+      path: "some/path",
+      file: "image1.jpg",
+      cdn: "host1",
+    },
+    {
+      path: "some/path",
+      file: "image2.jpg",
+      cdn: "host2",
+    },
+  ],
 };
 
 export const petList: PetProp[] = Array(30)
