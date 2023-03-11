@@ -4,7 +4,8 @@ import { Image } from "antd";
 import styled from "styled-components";
 import { importAll, single } from "store/pets";
 import { ReactElement, useEffect, useState } from "react";
-import { DetailProp, PetProp } from "models/model";
+import humanizeDuration from "humanize-duration";
+import { BreederProp, DetailProp, PetProp } from "models/model";
 import Service from "services/petService";
 import SourabhProfile from "../assets/images/sourabh.jpg";
 import { Gutter } from "antd/es/grid/row";
@@ -12,6 +13,8 @@ import { initCap } from "utils/stringFormatter";
 import { ReactComponent as Medal } from "../assets/icons/medal.svg";
 import { ReactComponent as Star } from "../assets/icons/star.svg";
 import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
+import dayjs from "dayjs";
+import { PetCard } from "./petCard";
 const detailImages = Array.from(
   new Set(
     Object.values(
@@ -33,19 +36,26 @@ interface LocationState {
 }
 
 const Detail = () => {
-  // const { state } = useLocation();
-  // const petDetail = (state as LocationState).from;
-  // const query = useQuery();
   const [searchParams, setSearchParams] = useSearchParams();
   const [pet, setPet] = useState<PetProp>({} as PetProp);
+  const [breeder, setBreeder] = useState<BreederProp>({} as BreederProp);
   useEffect(() => {
     const id = searchParams.get("pet-id");
     if (id) fetchPet(id);
   }, []);
+  useEffect(() => {
+    if (pet?.id) fetchBreeder(breeder.id);
+  }, [pet]);
   const fetchPet = (id: string) =>
     Service.getPet(id)
       .then((response: any) => {
         setPet(response.data as PetProp);
+      })
+      .catch((e) => console.log(e));
+  const fetchBreeder = (id: string) =>
+    Service.getBreeder(id)
+      .then((response: any) => {
+        setBreeder(response.data as BreederProp);
       })
       .catch((e) => console.log(e));
   const imagesGutter: [Gutter, Gutter] = [10, 40];
@@ -70,6 +80,15 @@ const Detail = () => {
       </Row>
     );
   };
+  const getHumanizeAge = () => {
+    const dob = dayjs(pet.dob);
+    const now = dayjs();
+    return humanizeDuration(now.diff(dob), {
+      units: ["y", "mo", "d"],
+      round: true,
+    });
+  };
+
   const renderDPAndDetail = () => {
     return (
       <Row className="dp-container">
@@ -82,25 +101,26 @@ const Detail = () => {
         </Col>
         <Col flex="auto" className="short-details">
           <Row>
-            <Col span={12}>{initCap(pet.breeder.name)}</Col>
+            <Col span={12}>{initCap(breeder.name)}</Col>
           </Row>
           <Row>
             <Col span={18}>
               <Row>
-                <Col span={13} className="icon-and-text">
+                <Col span={24} className="icon-and-text">
                   <div className="star-and-rating">
                     <Star className="star breeder-highlight-detail" />
                     <div className="breeder-highlight-detail">
-                      {pet.breeder?.rating?.toFixed(1)}
+                      {breeder?.rating?.toFixed(1)}
                     </div>
                   </div>
                   <div className="dot breeder-highlight-detail">&#8226;</div>
                   <div className="review-length ">
                     <div className="breeder-highlight-detail">
-                      {pet.breeder.reviews.length}
+                      {breeder?.reviews?.length}
                     </div>
                     <div className="breeder-highlight-detail">Reviews</div>
                   </div>
+                  <div className="dot breeder-highlight-detail">&#8226;</div>
                   <div className="super-breeder">
                     <Medal className="medal breeder-highlight-detail" />
                     <div className="breeder-highlight-detail">
@@ -111,7 +131,7 @@ const Detail = () => {
                   <div className="super-breeder">
                     <LocationIcon className="location breeder-highlight-detail" />
                     <div className="breeder-highlight-detail">
-                      {pet.breeder.location.name}
+                      {breeder?.location?.name}
                     </div>
                   </div>
                 </Col>
@@ -130,10 +150,10 @@ const Detail = () => {
           <Col className="detail-and-desc">{initCap(pet.title)}</Col>
         </Row>
         <Row>
-          <Col span={8} className="pet-info">
+          <Col span={24} className="pet-info">
             <div className="each-pet-info">{initCap(pet.breed)}</div>
             <div className="each-pet-info">&#8226;</div>
-            <div className="each-pet-info">{pet.dob}</div>
+            <div className="each-pet-info">{getHumanizeAge()}</div>
             <div className="each-pet-info">&#8226;</div>
             <div className="each-pet-info">{initCap(pet.gender)}</div>
           </Col>
@@ -151,18 +171,32 @@ const Detail = () => {
   };
   const renderDocuments = () => {
     return (
-      pet.documents &&
-      pet.documents.length > 0 && (
+      pet?.documents?.length > 0 && (
         <>
           <Row className="document-header">Documents</Row>
           <Row>
             <Col span={24}>
-              {pet.documents.map((each) => (
-                <div className="each-doc">&#8226;{each.name}</div>
+              {pet.documents.map((each, i) => (
+                <div key={i} className="each-doc">
+                  &#8226;<div className="each-doc-text">{each.name}</div>
+                </div>
               ))}
             </Col>
           </Row>
         </>
+      )
+    );
+  };
+  const renderBreederPets = () => {
+    return (
+      breeder && (
+        <Row>
+          <Col span={24}>
+            {breeder?.pets?.map((each, i) => (
+              <PetCard {...each} />
+            ))}
+          </Col>
+        </Row>
       )
     );
   };
@@ -175,6 +209,8 @@ const Detail = () => {
           {renderDPAndDetail()}
           {renderDetailAndDescription()}
           {renderDocuments()}
+          <Divider className="divider" />
+          {renderBreederPets()}
         </div>
       )}
     </DIV>
@@ -200,14 +236,16 @@ const DIV = styled.div`
       font-style: normal;
       font-weight: 400;
       padding: 2px 0;
+      display: flex;
+      .each-doc-text {
+        padding-left: 5px;
+      }
     }
     .description {
       padding: 10px 0;
       color: #344054;
     }
-    .pet-info {
-      color: #667085;
-    }
+
     .detail-and-desc {
       padding-bottom: 10px;
     }
@@ -222,8 +260,12 @@ const DIV = styled.div`
       margin-top: 10px;
     }
     .pet-info {
+      color: #667085;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
+      .each-pet-info {
+        padding-right: 10px;
+      }
     }
     .short-details {
       .icon-and-text {
@@ -244,7 +286,7 @@ const DIV = styled.div`
           display: flex;
         }
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
       }
       svg {
         position: relative;
@@ -282,6 +324,3 @@ const DIV = styled.div`
 `;
 
 export default Detail;
-function useQuery() {
-  throw new Error("Function not implemented.");
-}

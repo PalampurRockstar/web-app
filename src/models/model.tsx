@@ -32,15 +32,18 @@ export interface PetProp {
   documents: DocumentProp[];
 }
 export interface ImageProp {
+  id: string;
   file: string;
   path: string;
 }
 export interface DocumentProp {
+  id: string;
   name: string;
   docNumber: string;
   validUntil: string;
 }
 export interface Review {
+  id: string;
   comment: string;
   likeCount: number;
   disLikeCount: number;
@@ -48,12 +51,14 @@ export interface Review {
 }
 
 export interface BreederProp {
+  id: string;
   name: string;
   code: string;
   location: LocatoinProp;
   rating: number;
   images: ImageProp[];
   reviews: Review[];
+  pets: PetProp[];
 }
 
 export interface ImageProp {

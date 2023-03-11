@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: "http://34.117.217.185/pet-onboarding",
-  // baseURL: "http://localhost:8080",
+  // baseURL: "http://34.117.217.185/pet-onboarding",
+  baseURL: "http://localhost:8080",
   headers: {
     "Content-type": "application/json",
   },
@@ -20,6 +20,9 @@ const getAllLocations = () => {
 };
 const getPet = (id: any) => {
   return http.get(`/pet/${id}`);
+};
+const getBreeder = (id: any) => {
+  return http.get(`/breeder/${id}`);
 };
 
 const create = (data: any) => {
@@ -46,6 +49,7 @@ const Service = {
   getAllPets,
   getAllLocations,
   searchPets,
+  getBreeder,
   getPet,
   create,
   update,
