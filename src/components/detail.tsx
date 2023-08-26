@@ -2,10 +2,10 @@ import { Col, Divider, Row } from "antd";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { Image } from "antd";
 import styled from "styled-components";
-import { importAll, single } from "store/pets";
+import { importAll, petImages, single } from "store/pets";
 import { ReactElement, useEffect, useState } from "react";
 import humanizeDuration from "humanize-duration";
-import { BreederProp, DetailProp, PetProp } from "models/model";
+import { BreederProp, DetailProp, DocumentProp, PetProp } from "models/model";
 import Service from "services/petService";
 import SourabhProfile from "../assets/images/sourabh.jpg";
 import { Gutter } from "antd/es/grid/row";
@@ -15,6 +15,7 @@ import { ReactComponent as Star } from "../assets/icons/star.svg";
 import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
 import dayjs from "dayjs";
 import { PetCard } from "./petCard";
+import { PetShow } from "./petToShow";
 const detailImages = Array.from(
   new Set(
     Object.values(
@@ -36,28 +37,58 @@ interface LocationState {
 }
 
 const Detail = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, ] = useSearchParams();
   const [pet, setPet] = useState<PetProp>({} as PetProp);
+  const [documents, setDocuments] = useState<DocumentProp[]>([] );
   const [breeder, setBreeder] = useState<BreederProp>({} as BreederProp);
   useEffect(() => {
     const id = searchParams.get("pet-id");
-    if (id) fetchPet(id);
+    if (id) {
+      fetchPet(id);
+      fetchDocuments(id);
+    }
   }, []);
+  
   useEffect(() => {
-    if (pet?.id) fetchBreeder(breeder.id);
-  }, [pet]);
+    const id=pet?.breeder?.id
+    if (id) {
+      fetchBreeder(id);
+    }
+
+  }, [pet.breeder]);
+
+
   const fetchPet = (id: string) =>
     Service.getPet(id)
       .then((response: any) => {
         setPet(response.data as PetProp);
       })
       .catch((e) => console.log(e));
-  const fetchBreeder = (id: string) =>
+
+  const fetchBreeder = (id: string) =>{
+    if (id)
     Service.getBreeder(id)
       .then((response: any) => {
-        setBreeder(response.data as BreederProp);
+        const fetchedBreeder:BreederProp=response.data
+        const responsePetList=fetchedBreeder.pets.map((each, i) => {
+          return {
+            ...each,
+            image: petImages[i % petImages.length],
+          };
+        })
+        setBreeder({...fetchedBreeder,pets:responsePetList});
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(e));}
+
+  const fetchDocuments = (id: string) =>{
+        if (id)
+        Service.getPetsDocument(id)
+          .then((response: any) => {
+            const docList: DocumentProp[]=response.data||[]
+            setDocuments(docList);
+          })
+          .catch((e) => console.log(e));}
+
   const imagesGutter: [Gutter, Gutter] = [10, 40];
   const renderImages = () => {
     return (
@@ -171,12 +202,12 @@ const Detail = () => {
   };
   const renderDocuments = () => {
     return (
-      pet?.documents?.length > 0 && (
+      documents?.length > 0 && (
         <>
           <Row className="document-header">Documents</Row>
           <Row>
             <Col span={24}>
-              {pet.documents.map((each, i) => (
+              {documents?.map((each, i) => (
                 <div key={i} className="each-doc">
                   &#8226;<div className="each-doc-text">{each.name}</div>
                 </div>
@@ -192,9 +223,7 @@ const Detail = () => {
       breeder && (
         <Row>
           <Col span={24}>
-            {breeder?.pets?.map((each, i) => (
-              <PetCard {...each} />
-            ))}
+             <PetShow petlist={breeder?.pets}/>
           </Col>
         </Row>
       )

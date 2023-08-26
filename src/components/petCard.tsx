@@ -25,17 +25,17 @@ export const PetCard = (pet: PetProp) => {
 
   return (
     <DIV>
-      <div className="pet-pet">
-        <Image src={pet.image} preview={false} />
+      <div className="pet-detail">
+        <Image src={pet?.image} preview={false} />
         <div className="detail-box">
           <div className="title-and-fav">
-            <div className="title" onClick={() => openDetail(pet.id)}>
-              {initCap(pet.title)}
+            <div className="title" onClick={() => openDetail(pet?.id)}>
+              {initCap(pet?.title)}
             </div>
             <FavouriteIcon each={pet} />
           </div>
-          <div className="breed-and-gender" onClick={() => openDetail(pet.id)}>
-            {initCap(`${pet.breed} • ${pet.gender}`)}
+          <div className="breed-and-gender" onClick={() => openDetail(pet?.id)}>
+            {initCap(`${pet?.breed} • ${pet?.gender}`)}
           </div>
           <div>
             <LocationIcon
@@ -43,13 +43,13 @@ export const PetCard = (pet: PetProp) => {
               height="12px"
               className="location-icon"
             />
-            {pet.location.name}
+            {pet?.location?.name}
           </div>
           <div className="price-and-rating">
-            <div className="price" onClick={() => openDetail(pet.id)}>
-              {currencyCode[pet.price.currencyCode]} {pet.price.amount}{" "}
+            <div className="price" onClick={() => openDetail(pet?.id)}>
+              {currencyCode[pet?.price?.currencyCode]} {pet?.price?.amount}{" "}
             </div>
-            {rating(pet.rating)}
+            {rating(pet?.rating)}
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@ export const FavouriteIcon = ({ each }: FavIconProp) => {
 };
 
 const DIV = styled.div`
-  .pet-pet {
+  .pet-detail {
     width: 270px;
     max-width: 270px;
     padding: 10px;

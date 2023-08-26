@@ -18,6 +18,9 @@ const searchPets = (data: any) => {
 const getAllLocations = () => {
   return http.get(`/location`);
 };
+const getPetsDocument = (id: any) => {
+  return http.get(`/pet/${id}/document`);
+};
 const getPet = (id: any) => {
   return http.get(`/pet/${id}`);
 };
@@ -56,6 +59,7 @@ const Service = {
   remove,
   removeAll,
   findByFirstName: findByFirstName,
+  getPetsDocument
 };
 
 export default Service;
