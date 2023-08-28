@@ -1,42 +1,35 @@
 import { Col, Divider, Row } from "antd";
-import { useLocation, useSearchParams } from "react-router-dom";
+import {  useSearchParams } from "react-router-dom";
 import { Image } from "antd";
 import styled from "styled-components";
-import { importAll, petImages, single } from "store/pets";
+import { petImages } from "store/pets";
 import { ReactElement, useEffect, useState } from "react";
 import humanizeDuration from "humanize-duration";
-import { BreederProp, DetailProp, DocumentProp, PetProp } from "models/model";
+import { BreederProp,  DocumentProp, PetProp } from "models/model";
 import Service from "services/petService";
-import SourabhProfile from "../assets/images/sourabh.jpg";
 import { Gutter } from "antd/es/grid/row";
 import { initCap } from "utils/stringFormatter";
 import { ReactComponent as Medal } from "../assets/icons/medal.svg";
 import { ReactComponent as Star } from "../assets/icons/star.svg";
 import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
 import dayjs from "dayjs";
-import { PetCard } from "./petCard";
 import { PetShow } from "./petToShow";
-const detailImages = Array.from(
-  new Set(
-    Object.values(
-      importAll(
-        require.context(
-          "../assets/images/pet-detail",
-          false,
-          /\.(png|jpe?g|svg)$/
-        )
-      )
-    )
-  )
-);
-export const detailImageList: ReactElement[] = detailImages.map((each) => (
-  <Image src={`${each}`} preview={false} />
-));
+import { fetchImage } from "utils/urlFormatter";
+import { buckets } from "common/constants";
+const detailImages = [
+  fetchImage([buckets.PET_DETAIL,'Image1.jpg']),
+  fetchImage([buckets.PET_DETAIL,'Image2.jpg']),
+  fetchImage([buckets.PET_DETAIL,'Image3.jpg']),
+  fetchImage([buckets.PET_DETAIL,'Image4.jpg']),
+  fetchImage([buckets.PET_DETAIL,'Image5.jpg'])
+];
+
 interface LocationState {
   from: PetProp;
 }
 
 const Detail = () => {
+
   const [searchParams, ] = useSearchParams();
   const [pet, setPet] = useState<PetProp>({} as PetProp);
   const [documents, setDocuments] = useState<DocumentProp[]>([] );
@@ -57,7 +50,9 @@ const Detail = () => {
 
   }, [pet.breeder]);
 
-
+const detailImageList: ReactElement[] = detailImages.map((each) => (
+  <Image src={`${each}`} preview={false} />
+));
   const fetchPet = (id: string) =>
     Service.getPet(id)
       .then((response: any) => {
@@ -103,7 +98,16 @@ const Detail = () => {
               </Row>
               <Row gutter={imagesGutter}>
                 <Col span={12}>{detailImageList[3]}</Col>
-                <Col span={12}>{detailImageList[4]}</Col>
+                <Col span={12}>
+                  <Row gutter={imagesGutter}>
+                    <Col span={12}>{detailImageList[3]}</Col>
+                    <Col span={12}>{detailImageList[4]}</Col>
+                  </Row>
+                  <Row gutter={imagesGutter}>
+                    <Col span={12}>{detailImageList[3]}</Col>
+                    <Col span={12}>{detailImageList[4]}</Col>
+                  </Row>
+                </Col>
               </Row>
             </Col>
           </Row>
@@ -127,7 +131,7 @@ const Detail = () => {
           <Image
             className="profile-picture"
             preview={false}
-            src={SourabhProfile}
+            src={fetchImage(['sourabh.jpg'])}
           />
         </Col>
         <Col flex="auto" className="short-details">

@@ -28,7 +28,7 @@ const AppHeader = () => {
           <ButtonSetCol>
             <Menu
               mode="horizontal"
-              items={MenuItems.map((each, index) => ({
+              items={MenuItems?.map((each, index) => ({
                 key: index,
                 icon: each.icon,
               }))}

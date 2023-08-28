@@ -1,5 +1,7 @@
+import { buckets } from "common/constants";
 import { DocumentProp, PetProp, Review } from "models/model";
 import { zeroPad } from "utils/stringFormatter";
+import { fetchImage } from "utils/urlFormatter";
 
 export const importAll = (require) =>
   require.keys().reduce((acc, next) => {
@@ -16,12 +18,22 @@ declare global {
     ) => any;
   }
 }
-
-export const petImages: string[] = Object.values(
-  importAll(
-    require.context("../assets/images/pet-show", false, /\.(png|jpe?g|svg)$/)
-  )
-);
+const petImageNameList=['cat-1.jpg'        
+,'cat-2.jpg'
+,'cat-3.jpg'
+,'dog-2.jpg'
+,'dog.jpg'
+,'fish.jpg'
+,'lab.png'
+,'parrot.jpg'
+,'pug.jpg'
+,'rabbit-2.jpg'
+,'rabbit.jpg'
+,'raptile.jpg'
+,'rat.jpg'
+,'snake.jpg'
+,'sparrow.jpg']
+export const petImages: string[] = petImageNameList.map(i=>fetchImage([buckets.PET_SHOW,i]))
 export const single: PetProp = {
   id: "P001",
   breed: "Beagle",
@@ -78,7 +90,7 @@ export const single: PetProp = {
           {
             id: "8687",
             path: "some/path",
-            file: "image1.jpg",
+            file:fetchImage(['sourabh.jpg']),
             cdn: "host1",
           },
         ],
@@ -89,7 +101,12 @@ export const single: PetProp = {
         likeCount: 2,
         disLikeCount: 3,
         evidence: [
-          { id: "8687", path: "some/path", file: "image1.jpg", cdn: "host1" },
+          {
+            id: "8687", 
+            path: "some/path", 
+            file: fetchImage([buckets.PET_SHOW,'dog.jpg']), 
+            cdn: "host1" 
+          },
         ],
       },
     ],

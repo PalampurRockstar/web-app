@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 import { ReactElement } from "react";
 import React from "react";
-import { Button } from "antd";
+import { Button ,Image} from "antd";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 
 export interface IconProp {
-  icon: ReactElement;
+  path: string;
   name: string;
 }
 interface IconSliderProp {
@@ -20,6 +20,7 @@ export const IconSlider = ({
   list,
   selectedIcon,
 }: IconSliderProp) => {
+  console.log('list : ',list)
   const [pointer, changePointer] = React.useState<number>(0);
   const iconList = list;
   const finalList = () =>
@@ -32,7 +33,7 @@ export const IconSlider = ({
         className="each-icon"
         onClick={() => selectedIcon(each.name)}
       >
-        {each.icon}
+        <Image src={each.path} preview={false} />
       </Button>
     ));
   const moveRight = () => changePointer((p) => (p - 1 >= 0 ? p - 1 : p));

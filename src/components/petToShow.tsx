@@ -14,7 +14,7 @@ export const PetShow = ({ petlist }: PetShowProp) => {
   return (
     <DIV>
       <div className="pet-show">
-        {petlist.map((each, i) => (
+        {petlist?.map((each, i) => (
           <PetCard {...each} key={i} />
         ))}
       </div>

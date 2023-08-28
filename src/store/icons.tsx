@@ -1,26 +1,27 @@
 import { IconProp } from "components/iconPaginator";
-import { importAll } from "./pets";
-import { Image } from "antd";
 
-const iconFiles = Array.from(
-  new Set(
-    Object.values(
-      importAll(
-        require.context(
-          "../assets/icons/pet-slider",
-          false,
-          /\.(png|jpe?g|svg)$/
-        )
-      )
-    )
-  )
-);
-export const iconList: IconProp[] = iconFiles.map((each) => {
-  const fileName = `${each}`.replace(/^.*[\\\/]/, "").split(".")[0];
+import { fetchImage } from "utils/urlFormatter";
+import { buckets } from "common/constants";
+
+const iconNamelist=['All.svg'
+,'Bird.svg'
+,'Cat.svg'
+,'Dog.svg'
+,'Fish.svg'
+,'Frog.svg'
+,'Hedgehog.svg'
+,'Lizard.svg'
+,'Pig.svg'
+,'Rabbit.svg'
+,'Rat.svg'
+,'Snake.svg'
+,'Turtle.svg'
+,'ZExotic.svg']
+
+export const iconList = iconNamelist.map(ic=>{
   return {
-    icon: <Image src={`${each}`} preview={false} />,
-    name: fileName,
-  } as IconProp;
+    path:fetchImage([buckets.ICON_PET_SLIDER,ic]),
+    name: ic,
+  } as IconProp
 });
 
-console.log("iconList : ", iconList);
