@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { petImages } from "store/pets";
 import { ReactElement, useEffect, useState } from "react";
 import humanizeDuration from "humanize-duration";
-import { BreederProp,  DocumentProp, PetProp } from "models/model";
+import { BreederProp,  DocumentProp, ImageProp, PetProp } from "models/model";
 import Service from "services/petService";
 import { Gutter } from "antd/es/grid/row";
 import { initCap } from "utils/stringFormatter";
@@ -14,15 +14,7 @@ import { ReactComponent as Star } from "../assets/icons/star.svg";
 import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
 import dayjs from "dayjs";
 import { PetShow } from "./petToShow";
-import { fetchImage } from "utils/urlFormatter";
-import { buckets } from "common/constants";
-const detailImages = [
-  fetchImage([buckets.PET_DETAIL,'Image1.jpg']),
-  fetchImage([buckets.PET_DETAIL,'Image2.jpg']),
-  fetchImage([buckets.PET_DETAIL,'Image3.jpg']),
-  fetchImage([buckets.PET_DETAIL,'Image4.jpg']),
-  fetchImage([buckets.PET_DETAIL,'Image5.jpg'])
-];
+
 
 interface LocationState {
   from: PetProp;
@@ -32,12 +24,14 @@ const Detail = () => {
 
   const [searchParams, ] = useSearchParams();
   const [pet, setPet] = useState<PetProp>({} as PetProp);
+  const [images, setImages] = useState<ImageProp[]>([]);
   const [documents, setDocuments] = useState<DocumentProp[]>([] );
   const [breeder, setBreeder] = useState<BreederProp>({} as BreederProp);
   useEffect(() => {
     const id = searchParams.get("pet-id");
     if (id) {
       fetchPet(id);
+      fetchImagesForPet(id);
       fetchDocuments(id);
     }
   }, []);
@@ -47,18 +41,25 @@ const Detail = () => {
     if (id) {
       fetchBreeder(id);
     }
-
   }, [pet.breeder]);
 
-const detailImageList: ReactElement[] = detailImages.map((each) => (
-  <Image src={`${each}`} preview={false} />
-));
-  const fetchPet = (id: string) =>
+  
+  const generateImage=(i:ImageProp)=><Image src={`${i.path}/${i.file}`} preview={false} />
+const detailImageList: ReactElement[] = images.sort((f,s)=>f?.file?.localeCompare(s?.file))
+.map(i=>generateImage(i));
+const fetchPet = (id: string) =>
     Service.getPet(id)
       .then((response: any) => {
         setPet(response.data as PetProp);
       })
       .catch((e) => console.log(e));
+const fetchImagesForPet = (id: string) =>
+      Service.fetchImagesForPet(id)
+        .then((response: any) => {
+          const imagelist:ImageProp[]=response.data
+          setImages(imagelist);
+        })
+        .catch((e) => console.log(e));
 
   const fetchBreeder = (id: string) =>{
     if (id)
@@ -85,27 +86,28 @@ const detailImageList: ReactElement[] = detailImages.map((each) => (
           .catch((e) => console.log(e));}
 
   const imagesGutter: [Gutter, Gutter] = [10, 40];
-  const renderImages = () => {
+  const renderImages = (inputPet:PetProp) => {
+    const imaleList=inputPet?.images.map(generateImage)
     return (
       <Row gutter={imagesGutter} className="image-collage">
         <Col span={24}>
           <Row gutter={imagesGutter}>
-            <Col span={12}>{detailImageList[0]}</Col>
+            <Col span={12}>{generateImage(inputPet?.profilePicture)}</Col>
             <Col span={12}>
               <Row gutter={imagesGutter}>
-                <Col span={12}>{detailImageList[1]}</Col>
-                <Col span={12}>{detailImageList[2]}</Col>
+                <Col span={12}>{imaleList[0]}</Col>
+                <Col span={12}>{imaleList[1]}</Col>
               </Row>
               <Row gutter={imagesGutter}>
-                <Col span={12}>{detailImageList[3]}</Col>
+                <Col span={12}>{imaleList[2]}</Col>
                 <Col span={12}>
                   <Row gutter={imagesGutter}>
-                    <Col span={12}>{detailImageList[3]}</Col>
-                    <Col span={12}>{detailImageList[4]}</Col>
+                    <Col span={12}>{imaleList[3]}</Col>
+                    <Col span={12}>{imaleList[4]}</Col>
                   </Row>
                   <Row gutter={imagesGutter}>
-                    <Col span={12}>{detailImageList[3]}</Col>
-                    <Col span={12}>{detailImageList[4]}</Col>
+                    <Col span={12}>{imaleList[5]}</Col>
+                    <Col span={12}>{imaleList[6]}</Col>
                   </Row>
                 </Col>
               </Row>
@@ -124,15 +126,16 @@ const detailImageList: ReactElement[] = detailImages.map((each) => (
     });
   };
 
+  const isImageValid=breeder?.profilePicture?.path && breeder?.profilePicture?.file
   const renderDPAndDetail = () => {
     return (
       <Row className="dp-container">
         <Col flex="70px">
-          <Image
+        {isImageValid&&<Image
             className="profile-picture"
             preview={false}
-            src={fetchImage(['sourabh.jpg'])}
-          />
+            src={`${breeder?.profilePicture?.path}${breeder?.profilePicture?.file}`}
+          />}
         </Col>
         <Col flex="auto" className="short-details">
           <Row>
@@ -227,7 +230,7 @@ const detailImageList: ReactElement[] = detailImages.map((each) => (
       breeder && (
         <Row>
           <Col span={24}>
-             <PetShow petlist={breeder?.pets}/>
+             <PetShow petlist={breeder?.pets} style ={{justifyContent:'left'}}/>
           </Col>
         </Row>
       )
@@ -238,7 +241,7 @@ const detailImageList: ReactElement[] = detailImages.map((each) => (
     <DIV>
       {show && (
         <div className="pet-detail-page">
-          {renderImages()}
+          {renderImages(pet)}
           {renderDPAndDetail()}
           {renderDetailAndDescription()}
           {renderDocuments()}

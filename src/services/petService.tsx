@@ -24,6 +24,10 @@ const getPetsDocument = (id: any) => {
 const getPet = (id: any) => {
   return http.get(`/pet/${id}`);
 };
+const fetchImagesForPet = (id: any) => {
+  return http.get(`/pet/${id}/image`);
+};
+
 const getBreeder = (id: any) => {
   return http.get(`/breeder/${id}`);
 };
@@ -59,7 +63,8 @@ const Service = {
   remove,
   removeAll,
   findByFirstName: findByFirstName,
-  getPetsDocument
+  getPetsDocument,
+  fetchImagesForPet
 };
 
 export default Service;

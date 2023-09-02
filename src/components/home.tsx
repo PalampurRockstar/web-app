@@ -65,7 +65,7 @@ const Home = () => {
           setCriteria((c) => ({ ...c, type: value }));
         }}
       />
-      <PetShow petlist={petList} />
+      <PetShow petlist={petList} style={{justifyContent:'center'}}/>
     </BodyContent>
   );
 };

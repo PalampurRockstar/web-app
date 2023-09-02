@@ -26,6 +26,7 @@ export interface PetProp {
   image: string;
   rating: number;
   images: ImageProp[];
+  profilePicture: ImageProp;
   reviews: Review[];
   dob: string;
   description: string;
@@ -41,6 +42,12 @@ export interface DocumentProp {
   name: string;
   docNumber: string;
   validUntil: string;
+}
+export interface ImageProp {
+  id: string,
+  file: string,
+  path: string,
+  cdn:string
 }
 export interface Review {
   id: string;
@@ -59,6 +66,7 @@ export interface BreederProp {
   images: ImageProp[];
   reviews: Review[];
   pets: PetProp[];
+  profilePicture:ImageProp;
 }
 
 export interface ImageProp {
@@ -86,6 +94,7 @@ export interface PriceProp {
 
 export interface PetShowProp {
   petlist: PetProp[];
+  style:React.CSSProperties
 }
 export interface FavIconProp {
   each: PetProp;

@@ -10,10 +10,10 @@ import { initCap } from "utils/stringFormatter";
 import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
 import { FavouriteIcon, PetCard } from "./petCard";
 
-export const PetShow = ({ petlist }: PetShowProp) => {
+export const PetShow = ({ petlist,style }: PetShowProp) => {
   return (
     <DIV>
-      <div className="pet-show">
+      <div className="pet-show" style={style}>
         {petlist?.map((each, i) => (
           <PetCard {...each} key={i} />
         ))}
@@ -23,9 +23,9 @@ export const PetShow = ({ petlist }: PetShowProp) => {
 };
 const DIV = styled.div`
   .pet-show {
-    justify-content: center;
+    // justify-content: center;
     display: flex;
-    width: 80%;
+    // width: 80%;
     margin: auto;
     flex-wrap: wrap;
   }
