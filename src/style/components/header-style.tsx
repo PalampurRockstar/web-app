@@ -28,9 +28,8 @@ div{
       justify-content: flex-end;
       color:black;
       button{
-          margin-top:auto;
-          margin-bottom:auto;
           height:${SIZING.X4L};
+          margin: auto 2px;
           border-radius: 25px;
         }  
     }

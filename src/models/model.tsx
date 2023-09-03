@@ -99,3 +99,14 @@ export interface PetShowProp {
 export interface FavIconProp {
   each: PetProp;
 }
+
+export interface MenuOptionProp {
+  title: string;
+  clickHandler:(uri:string|undefined)=>void
+  uri?: string;
+}
+
+export interface AppRouter{
+  uri:string,
+  to:React.ReactNode
+}

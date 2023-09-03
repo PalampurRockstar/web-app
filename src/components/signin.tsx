@@ -1,0 +1,97 @@
+import { Col, Divider, Row } from "antd";
+import {  useSearchParams } from "react-router-dom";
+import { Image } from "antd";
+import styled from "styled-components";
+import { petImages } from "store/pets";
+import { ReactElement, useEffect, useState } from "react";
+import humanizeDuration from "humanize-duration";
+import { BreederProp,  DocumentProp, ImageProp, PetProp } from "models/model";
+import Service from "services/petService";
+import { Gutter } from "antd/es/grid/row";
+import { initCap } from "utils/stringFormatter";
+import { ReactComponent as Medal } from "../assets/icons/medal.svg";
+import { ReactComponent as Star } from "../assets/icons/star.svg";
+import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
+import dayjs from "dayjs";
+import { PetShow } from "./petToShow";
+import { SignInStyle } from "style/components/signIn-style";
+import TextField from '@mui/material/TextField';
+import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, Input, InputAdornment, InputLabel, Typography } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { fetchImage } from "utils/urlFormatter";
+
+interface LocationState {
+  from: PetProp;
+}
+
+const SignIn = () => {
+  const [show,setShow]=useState(true);
+  const HeaderText=()=><div className="welcome-text">Welcome back!</div>
+  const [showPassword, setShowPassword] = useState(false);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+  const LoginPage = () => 
+      <div className="login-page">
+      <img  src={fetchImage(['login-pet.jpg'])} className="background-image"/>
+      <Row justify="center">
+        <Col  className="login-form" >
+          <Row className="generat-text"><img width="80" height="80" src={fetchImage(['icons','login.svg'])} /></Row>
+          <Row className="generat-text"><HeaderText/></Row>
+          <Row className="generat-text">Please enter your details</Row>
+          <Row >
+            <FormControl fullWidth  variant="standard">
+              <InputLabel >Email</InputLabel>
+              <Input  id="standard-basic" />
+            </FormControl>
+          </Row>
+          <Row >
+            <FormControl  fullWidth variant="standard">
+            <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+            <Input 
+              id="standard-adornment-password"
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={()=>setShowPassword(p=>!p)}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+              </FormControl>
+          </Row>
+          <Row >
+          <Col span={13}>
+            <FormGroup>
+              <FormControlLabel control={<Checkbox size="small" />} label={<Typography className="text">Remember me</Typography>}/>
+            </FormGroup>
+            </Col> 
+            <Col span={11}>
+              <div className="forgot-password text">Forgot password?</div>
+            </Col>
+          </Row>
+          <Row> 
+            <Button fullWidth variant="contained" color="dark" className="login-button">Log In</Button>
+          </Row>
+          <Row > 
+            <Button fullWidth variant="contained" color="light" className="login-button" startIcon={<Image src={fetchImage(['icons','google.svg'])} preview={false} height="25px" />}>Log in with Google</Button>
+          </Row>
+          <Row justify="center" align="bottom" className="signup-text generat-text">  
+            Don't have an account? &nbsp;&nbsp;<h4 className="signin-text">Sign Up</h4>
+          </Row>
+        </Col>
+      </Row>
+      </div>
+  return (
+    <SignInStyle>
+      {show && <LoginPage/>}
+    </SignInStyle>
+  );
+};
+
+
+export default SignIn;

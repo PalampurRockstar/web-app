@@ -28,3 +28,13 @@ export const buckets = {
   PET_DETAIL: 'pet-detail',
   ICON_PET_SLIDER: 'icon-pet-slider',
 };
+
+export const ROUTES = {
+  HOME: '/',
+  DETAIL: '/detail',
+  SIGNIN: '/sigin',
+  SIGNUP: '/sigup',
+};
+
+
+export const hideHeaderList=new Set([ROUTES.SIGNIN,ROUTES.SIGNUP])

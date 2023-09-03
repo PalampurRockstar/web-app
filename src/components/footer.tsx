@@ -18,13 +18,15 @@ import { ReactComponent as InstagramIcon } from "../assets/icons/instagram.svg";
 import { ReactComponent as LinkedInIcon } from "../assets/icons/linkedin.svg";
 
 const { Footer } = Layout;
-
-export const AppFooter = () => {
+export interface AppFooterProp{
+  hideHeader:boolean
+}
+export const AppFooter = ({hideHeader}:AppFooterProp) => {
   return (
     <DIV>
       <Divider />
       <Footer>
-        <Row className="first-footer-row">
+        {!hideHeader&& <Row className="first-footer-row">
           <Col>
             <div className="each-item-footer">
               <Button>
@@ -57,7 +59,7 @@ export const AppFooter = () => {
               <div className="title-2">adipiscing eliteget lorem.</div>
             </div>
           </Col>
-        </Row>
+        </Row>}
         <Divider />
         <Row className="second-footer-row">
           <Col>
@@ -126,7 +128,7 @@ const DIV = styled.div`
       justify-content: space-evenly;
     }
   }
-  margin: 20px 0;
+  margin-bottom: 20px;
   .ant-layout-footer {
     padding: 0px;
   }
