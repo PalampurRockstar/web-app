@@ -21,7 +21,7 @@ const AppHeader = ({menuList}:AppHeaderProp) => {
 
   const classes = useStyles();
   return (
-    <HeaderContent style={{ background: colorBgContainer }}>
+    <HeaderContent >
       <HeaderRow>
         <Col>
           <div>PetApp</div>

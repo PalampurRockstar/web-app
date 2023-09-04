@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { petImages } from "store/pets";
 import { ReactElement, useEffect, useState } from "react";
 import humanizeDuration from "humanize-duration";
-import { BreederProp,  DocumentProp, ImageProp, PetProp } from "models/model";
+import { BreederProp,  DocumentProp, ImageProp, PetProp, SigninProp } from "models/model";
 import Service from "services/petService";
 import { Gutter } from "antd/es/grid/row";
 import { initCap } from "utils/stringFormatter";
@@ -19,18 +19,20 @@ import TextField from '@mui/material/TextField';
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, Input, InputAdornment, InputLabel, Typography } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { fetchImage } from "utils/urlFormatter";
-
+import credService from "services/credentialService";
 interface LocationState {
   from: PetProp;
 }
 
 const SignIn = () => {
   const [show,setShow]=useState(true);
+  const [state,setState]=useState<SigninProp>({}as SigninProp);
   const HeaderText=()=><div className="welcome-text">Welcome back!</div>
   const [showPassword, setShowPassword] = useState(false);
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault()
+  const handleLoginClick=()=>{
+    credService.login({...state}).then(r=>console.log(r)).catch(e=>console.log(e))
+  }
   const LoginPage = () => 
       <div className="login-page">
       <img  src={fetchImage(['login-pet.jpg'])} className="background-image"/>
@@ -42,7 +44,10 @@ const SignIn = () => {
           <Row >
             <FormControl fullWidth  variant="standard">
               <InputLabel >Email</InputLabel>
-              <Input  id="standard-basic" />
+              <Input  id="standard-basic" value={state.username} onChange={(e)=>{
+                console.log('e.target.value : ',e.target.value);
+                setState(s=>{return {...s,username:e.target.value}})
+              }}/>
             </FormControl>
           </Row>
           <Row >
@@ -51,11 +56,15 @@ const SignIn = () => {
             <Input 
               id="standard-adornment-password"
               type={showPassword ? 'text' : 'password'}
+              onChange={(e)=>setState(s=>{return {...s,password:e.target.value}})}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
-                    onClick={()=>setShowPassword(p=>!p)}
+                    onClick={()=>{
+                      setShowPassword(p=>!p)
+                    }}
+                    onMouseDown={handleMouseDownPassword}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -75,7 +84,7 @@ const SignIn = () => {
             </Col>
           </Row>
           <Row> 
-            <Button fullWidth variant="contained" color="dark" className="login-button">Log In</Button>
+            <Button fullWidth variant="contained" color="dark" className="login-button" onClick={handleLoginClick}>Log In</Button>
           </Row>
           <Row > 
             <Button fullWidth variant="contained" color="light" className="login-button" startIcon={<Image src={fetchImage(['icons','google.svg'])} preview={false} height="25px" />}>Log in with Google</Button>
@@ -86,9 +95,11 @@ const SignIn = () => {
         </Col>
       </Row>
       </div>
+
+  console.log('Reload')
   return (
     <SignInStyle>
-      {show && <LoginPage/>}
+      {show && LoginPage()}
     </SignInStyle>
   );
 };

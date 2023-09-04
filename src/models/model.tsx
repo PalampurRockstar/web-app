@@ -110,3 +110,14 @@ export interface AppRouter{
   uri:string,
   to:React.ReactNode
 }
+
+export interface SigninProp{
+  username: string,
+  password:string
+  isremember:boolean
+}
+
+export interface LoginCredRequest{
+  username: string,
+  password:string
+}

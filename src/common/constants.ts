@@ -21,6 +21,8 @@ export const currencyCode: CurrencyCode = {
 
 
 export const objectStorage:string="http://localhost:8888/api/images/"
+export const onboardingHost:string="http://localhost:8080"
+export const identityHost:string="http://localhost:8998"
 
 
 export const buckets = {

@@ -8,6 +8,9 @@ export const HeaderContent = styles(Header)`
   position: fixed;
   width: 100%;
   z-index: 1000;
+  line-height:55px;
+  background:transparent;
+  background-image: linear-gradient(to top, transparent,#f0e2db);
 `;
 export const HeaderRow = styles(Row)`
   justify-content: space-between;  
@@ -21,8 +24,11 @@ export const HeaderRow = styles(Row)`
  
 `;
 export const ButtonSetCol = styles(Col)`
-width:max-content;  
-div{
+    width:max-content;  
+    button{
+      background-color: rgb(255 255 255 / 50%);
+    }
+    div{
       height: 100%;
       display:flex;
       justify-content: flex-end;
@@ -36,6 +42,7 @@ div{
     ul{
       justify-content: flex-end;
       border-bottom:0px;
+      background: transparent;
       li{
         padding:5px !important;
         span{
