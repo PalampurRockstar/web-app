@@ -7,7 +7,8 @@ import Detail from "components/detail";
 import { AppRouter, MenuOptionProp } from "models/model";
 import SignIn from "components/signin";
 import { hideHeaderList, ROUTES } from "common/constants";
-import { useState } from "react";
+import SignUp from "components/signup";
+
 
 const Landing = () => {
   const navigate=(uri:string|undefined)=>{
@@ -27,6 +28,7 @@ const Landing = () => {
     {uri:ROUTES.HOME,to:<Home/>},
     {uri:ROUTES.DETAIL,to:<Detail/>},
     {uri:ROUTES.SIGNIN,to:<SignIn/>},
+    {uri:ROUTES.SIGNUP,to:<SignUp/>},
   ].map(r=>{return {...r,to:<>
   {!hideHeaderList.has(r.uri)&& <AppHeader menuList={menuSet}/>}
     {r.to}

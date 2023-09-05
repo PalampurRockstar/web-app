@@ -19,19 +19,31 @@ import TextField from '@mui/material/TextField';
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, Input, InputAdornment, InputLabel, Typography } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { fetchImage } from "utils/urlFormatter";
-import credService from "services/credentialService";
+import accessToken from "hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "common/constants";
+import CredService from "services/credentialService";
 interface LocationState {
   from: PetProp;
 }
 
 const SignIn = () => {
+  const {login}=CredService();
+  const navigate = useNavigate();
+  const {setAccessToken}=accessToken();
   const [show,setShow]=useState(true);
   const [state,setState]=useState<SigninProp>({}as SigninProp);
   const HeaderText=()=><div className="welcome-text">Welcome back!</div>
   const [showPassword, setShowPassword] = useState(false);
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault()
+  
   const handleLoginClick=()=>{
-    credService.login({...state}).then(r=>console.log(r)).catch(e=>console.log(e))
+    login({...state})
+    .then(({data})=>{
+      setAccessToken(data.access_token)
+      navigate(ROUTES.SIGNUP)
+    })
+    .catch(e=>console.log(e))
   }
   const LoginPage = () => 
       <div className="login-page">

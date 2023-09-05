@@ -1,21 +1,29 @@
 import axios from "axios";
 import { identityHost, onboardingHost } from "common/constants";
+import accessToken from "hooks/useAuth";
+import useIdentityHttp from "hooks/useAxiosPrivate";
 import { LoginCredRequest } from "models/model";
 
-const identityHttp = axios.create({
-  // baseURL: "http://34.117.217.185/pet-onboarding",
+
+export const identityHttp = axios.create({
   baseURL: identityHost,
-  headers: {
-    "Content-type": "application/json",
-  },
+  headers: { 'Content-Type': 'application/json' },
 });
-const headers = {
-  'Content-Type': 'application/json'
-};
-const Service = {
-  login:(cred:LoginCredRequest) => {
-    return identityHttp.post(`/credentials/login`,cred,{headers});
-  },
+
+const CredService = ()=>{
+  const identityUrl=useIdentityHttp()
+  const {getAccessToken}=accessToken();
+  return {
+    login:(cred:LoginCredRequest) => {
+      return identityUrl.post(`/credentials/login`,cred, { withCredentials: true });
+    },
+    verify:() => {
+      return identityUrl.get(`/credentials/verify`);
+    },
+    check:() => {
+      return identityUrl.get(`/credentials/set-cookie`);
+    },
+  }
 };
 
-export default Service;
+export default CredService;
