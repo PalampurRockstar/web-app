@@ -29,7 +29,6 @@ const AddPet = () => {
           lastName: response.data.lastName,
         });
         setSubmitted(true);
-        console.log(response.data);
       })
       .catch((e: any) => {
         console.log(e);

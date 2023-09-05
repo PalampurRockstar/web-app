@@ -21,13 +21,10 @@ const useIdentityHttp = () => {
         const responseIntercept = identityHttp.interceptors.response.use(
             response => response,
             async (error) => {
-                console.log("Status : ",error?.response?.status)
                 const prevRequest = error?.config;
                 if (error?.response?.status === 403 && !prevRequest?.sent) {
                     prevRequest.sent = true;
-                    console.log('old : ',error?.config.headers['Authorization'])
                     const newAccessToken = await refresh();
-                    console.log('newAccessToken : ',newAccessToken)
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return identityHttp(prevRequest);
                 }

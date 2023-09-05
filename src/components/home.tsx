@@ -10,6 +10,7 @@ import { fetchImage } from "utils/urlFormatter";
 import { IconSlider } from "./iconPaginator";
 import { LocationSelector } from "./LocationSelector";
 import { PetShow } from "./petToShow";
+import accessToken from "hooks/useAuth";
 
 const TitleText = () => {
   const classes = useStyles();
@@ -20,6 +21,8 @@ const TitleText = () => {
   );
 };
 const Home = () => {
+  
+  const {getAccessToken}=accessToken()
   const [petList, setPetList] = React.useState<PetProp[]>([]);
   const [criteria, setCriteria] = React.useState<SearchCriteria>(
     {} as SearchCriteria
@@ -40,7 +43,6 @@ const Home = () => {
             };
           })
         );
-        console.log(response.data);
       })
       .catch((e: any) => {
         console.log(e);

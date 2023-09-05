@@ -21,7 +21,6 @@ const PetList = () => {
     TutorialDataService.getAllPets()
       .then((response: any) => {
         setPets(response.data);
-        console.log(response.data);
       })
       .catch((e: any) => {
         console.log(e);
@@ -42,7 +41,6 @@ const PetList = () => {
   const removeAllPets = () => {
     TutorialDataService.removeAll()
       .then((response: any) => {
-        console.log(response.data);
         refreshList();
       })
       .catch((e: any) => {
@@ -54,7 +52,6 @@ const PetList = () => {
     TutorialDataService.findByFirstName(searchFirstName)
       .then((response: any) => {
         setPets(response.data);
-        console.log(response.data);
       })
       .catch((e: any) => {
         console.log(e);

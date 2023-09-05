@@ -11,12 +11,9 @@ const Pets = (props: any) => {
   const [message, setMessage] = useState("");
 
   const getPet = (id: any) => {
-    console.log("Getting current studnet");
     TutorialDataService.getPet(id)
       .then((response: any) => {
-        console.log(response);
         setCurrentPet(response.data);
-        console.log(response.data);
       })
       .catch((e: any) => {
         console.log(e);
@@ -35,7 +32,6 @@ const Pets = (props: any) => {
   const updatePet = () => {
     TutorialDataService.update(currentPet.id, currentPet)
       .then((response: any) => {
-        console.log(response.data);
         setMessage("Pet was updated successfully!");
       })
       .catch((e: any) => {
@@ -46,7 +42,6 @@ const Pets = (props: any) => {
   const deletePet = () => {
     TutorialDataService.remove(currentPet.id)
       .then((response: any) => {
-        console.log(response.data);
         props.history.push("/pets");
       })
       .catch((e: any) => {

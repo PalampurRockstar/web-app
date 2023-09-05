@@ -20,7 +20,6 @@ export const IconSlider = ({
   list,
   selectedIcon,
 }: IconSliderProp) => {
-  console.log('list : ',list)
   const [pointer, changePointer] = React.useState<number>(0);
   const iconList = list;
   const finalList = () =>

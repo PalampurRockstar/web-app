@@ -29,9 +29,7 @@ export const LocationSelector = ({
         const uniqueLocations = responsePetList.filter(function (item, pos) {
           return responsePetList.indexOf(item) === pos;
         });
-        console.log("uniqueLocations : ", uniqueLocations);
         setLocationList(uniqueLocations);
-        console.log(response.data);
       })
       .catch((e: any) => {
         console.log(e);

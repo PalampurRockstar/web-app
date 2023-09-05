@@ -56,10 +56,8 @@ const SignIn = () => {
           <Row >
             <FormControl fullWidth  variant="standard">
               <InputLabel >Email</InputLabel>
-              <Input  id="standard-basic" value={state.username} onChange={(e)=>{
-                console.log('e.target.value : ',e.target.value);
-                setState(s=>{return {...s,username:e.target.value}})
-              }}/>
+              <Input  id="standard-basic" value={state.username} onChange={(e)=>
+                setState(s=>{return {...s,username:e.target.value}})}/>
             </FormControl>
           </Row>
           <Row >
@@ -108,7 +106,7 @@ const SignIn = () => {
       </Row>
       </div>
 
-  console.log('Reload')
+
   return (
     <SignInStyle>
       {show && LoginPage()}
