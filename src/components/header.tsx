@@ -29,8 +29,8 @@ const AppHeader = ({menuList}:AppHeaderProp) => {
         <Col>
           <ButtonSetCol>
             <div>
-            {menuList.map(menu=>
-              <Button onClick={()=>menu.clickHandler(menu.uri)}>{menu.title}</Button>)
+            {menuList.map((menu,i)=>
+              <Button key={i} onClick={()=>menu.clickHandler(menu.uri)}>{menu.title}</Button>)
               }
             </div>
           </ButtonSetCol>

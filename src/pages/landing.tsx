@@ -8,6 +8,8 @@ import { AppRouter, MenuOptionProp } from "models/model";
 import SignIn from "components/signin";
 import { hideHeaderList, ROUTES } from "common/constants";
 import SignUp from "components/signup";
+import TestView from "components/test-view";
+import { Key } from "@mui/icons-material";
 
 
 const Landing = () => {
@@ -29,7 +31,8 @@ const Landing = () => {
     {uri:ROUTES.DETAIL,to:<Detail/>},
     {uri:ROUTES.SIGNIN,to:<SignIn/>},
     {uri:ROUTES.SIGNUP,to:<SignUp/>},
-  ].map(r=>{return {...r,to:<>
+    {uri:ROUTES.TESTVIEW,to:<TestView/>},
+  ].map((r,i)=>{return {...r,to:<>
   {!hideHeaderList.has(r.uri)&& <AppHeader menuList={menuSet}/>}
     {r.to}
   <AppFooter hideHeader={hideHeaderList.has(r.uri)} />
@@ -38,7 +41,7 @@ const Landing = () => {
     <Layout>
       <BrowserRouter>
         <Routes>
-        {router.map(r=><Route path={r.uri} element={r.to}/>)}
+        {router.map((r,i)=><Route key={i} path={r.uri} element={r.to}/>)}
         </Routes>
       </BrowserRouter>
     </Layout>

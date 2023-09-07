@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { PetProp, SearchCriteria } from "models/model";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Service from "services/petService";
 import { iconList } from "store/icons";
 import { petImages } from "store/pets";
@@ -11,6 +11,8 @@ import { IconSlider } from "./iconPaginator";
 import { LocationSelector } from "./LocationSelector";
 import { PetShow } from "./petToShow";
 import accessToken from "hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "common/constants";
 
 const TitleText = () => {
   const classes = useStyles();
@@ -21,13 +23,21 @@ const TitleText = () => {
   );
 };
 const Home = () => {
-  
-  const {getAccessToken}=accessToken()
+  const [loading,setLoading]=useState(true)
+  const navigate = useNavigate();
   const [petList, setPetList] = React.useState<PetProp[]>([]);
   const [criteria, setCriteria] = React.useState<SearchCriteria>(
     {} as SearchCriteria
   );
 
+  useEffect(()=>{
+    const {getAccessToken}=accessToken()
+    if(getAccessToken())setLoading(false)
+    else navigate(ROUTES.SIGNIN)
+  },[])
+    
+  
+  
   React.useEffect(() => {
     reloadPetList(criteria);
   }, [criteria]);
@@ -48,6 +58,7 @@ const Home = () => {
         console.log(e);
       });
   };
+  if (loading) return <>loading</>
   return (
     <BodyContent>
       <LandingPageImage preview={false} src={fetchImage(['landing.jpg'])} />

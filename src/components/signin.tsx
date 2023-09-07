@@ -41,7 +41,7 @@ const SignIn = () => {
     login({...state})
     .then(({data})=>{
       setAccessToken(data.access_token)
-      navigate(ROUTES.SIGNUP)
+      navigate(ROUTES.HOME)
     })
     .catch(e=>console.log(e))
   }

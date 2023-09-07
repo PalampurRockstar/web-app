@@ -36,6 +36,7 @@ export const ROUTES = {
   DETAIL: '/detail',
   SIGNIN: '/sigin',
   SIGNUP: '/sigup',
+  TESTVIEW: '/test-view',
 };
 
 

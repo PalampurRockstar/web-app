@@ -44,10 +44,10 @@ export interface DocumentProp {
   validUntil: string;
 }
 export interface ImageProp {
-  id: string,
-  file: string,
-  path: string,
-  cdn:string
+  id: string;
+  file: string;
+  path: string;
+  cdn: string;
 }
 export interface Review {
   id: string;
@@ -66,7 +66,7 @@ export interface BreederProp {
   images: ImageProp[];
   reviews: Review[];
   pets: PetProp[];
-  profilePicture:ImageProp;
+  profilePicture: ImageProp;
 }
 
 export interface ImageProp {
@@ -94,7 +94,7 @@ export interface PriceProp {
 
 export interface PetShowProp {
   petlist: PetProp[];
-  style:React.CSSProperties
+  style: React.CSSProperties;
 }
 export interface FavIconProp {
   each: PetProp;
@@ -102,22 +102,28 @@ export interface FavIconProp {
 
 export interface MenuOptionProp {
   title: string;
-  clickHandler:(uri:string|undefined)=>void
+  clickHandler: (uri: string | undefined) => void;
   uri?: string;
 }
 
-export interface AppRouter{
-  uri:string,
-  to:React.ReactNode
+export interface AppRouter {
+  uri: string;
+  to: React.ReactNode;
 }
 
-export interface SigninProp{
-  username: string,
-  password:string
-  isremember:boolean
+export interface SigninProp {
+  username: string;
+  password: string;
+  isremember: boolean;
 }
 
-export interface LoginCredRequest{
-  username: string,
-  password:string
+export interface LoginCredRequest {
+  username: string;
+  password: string;
+}
+
+export interface SigninForm {
+  username: string;
+  password: string;
+  date_of_birth: string;
 }

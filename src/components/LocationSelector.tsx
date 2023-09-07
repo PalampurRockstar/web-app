@@ -1,4 +1,4 @@
-import { Input, Select } from "antd";
+import { Input, Select, Space } from "antd";
 import { SIZING } from "common/constants";
 import { LocatoinProp } from "models/model";
 import React from "react";
@@ -36,7 +36,7 @@ export const LocationSelector = ({
       });
   };
   return (
-    <LocationGroup compact>
+    <LocationGroup >
       <Select placeholder="All Locations" onChange={locationSelected}>
         {locationList.map((e, i) => (
           <Option key={i} value={e}>
@@ -54,7 +54,7 @@ export const LocationSelector = ({
   );
 };
 
-export const LocationGroup = styled(Input.Group)`
+export const LocationGroup = styled(Space.Compact)`
   padding: 16px 0px;
   display: flex !important;
   width: 400px;
@@ -86,8 +86,8 @@ export const LocationGroup = styled(Input.Group)`
     border-color: #d9d9d9 !important;
   }
   .ant-input-affix-wrapper > span {
-    position: relative;
-    bottom: 5px;
+    // position: relative;
+    // bottom: 5px;
   }
   span.ant-input-group-addon > button {
     border-top-right-radius: 25px !important;
