@@ -27,15 +27,15 @@ export const CustomTimelineItem = styled(TimelineItem)`
     .MuiTimelineConnector-root {
       background-color: ${(props) => props.color || "red"};
     }
-    span:nth-child(3) {
-      // background-color: green;
-      height: ${(props) => props.inlist.belowHeight || "10px"};
-    }
     span:nth-child(1) {
-      // background-color: red;
+      background-color: ${(props) => props.inlist.topConnectorColor};
       height: ${(props) => props.inlist.aboveHeight || "10px"};
       min-height: ${(props) => props.inlist.aboveHeight || "10px"};
       max-height: ${(props) => props.inlist.aboveHeight || "10px"};
+    }
+    span:nth-child(3) {
+      background-color: ${(props) => props.inlist.bottomConnectorColor};
+      height: ${(props) => props.inlist.belowHeight || "10px"};
     }
   }
   .timeline-content {
@@ -63,7 +63,7 @@ export const CustomTimelineItem = styled(TimelineItem)`
       }
     }
     .datepicker {
-      width: 98%;
+      width: 100%;
     }
     .gift-image {
       position: absolute;
@@ -76,10 +76,10 @@ export const CustomTimelineItem = styled(TimelineItem)`
   }
 
   .MuiFormControl-fullWidth {
-    width: 99%;
+    width: 100%;
   }
   .btn {
-    margin: 2px;
+    padding: 8px;
   }
   .highlighted {
     background: #dbcad5;

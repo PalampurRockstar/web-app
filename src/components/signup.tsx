@@ -67,14 +67,23 @@ import EditIcon from "@mui/icons-material/Edit";
 import BackupIcon from "@mui/icons-material/Backup";
 import RedeemIcon from "@mui/icons-material/Redeem";
 import { timelineItemClasses } from "@mui/lab/TimelineItem";
+enum FormRows {
+  EMAIL,
+  PASSWORD,
+  DOB,
+  SUBMIT,
+  BONUS,
+}
 export interface TimelineItemProp {
+  // name: keyof FormRows;
   header: string;
   content: React.ReactNode;
   time: string;
   doneInput?: boolean;
   icon: React.ReactNode;
-  key?: keyof SigninForm;
   height?: string;
+  topConnectorColor?: string;
+  bottomConnectorColor?: string;
   contentColor?:
     | "secondary"
     | "inherit"
@@ -90,19 +99,15 @@ export const CustomizedTimeline = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [timeline, setTimeline] = useState<TimelineItemProp[]>([]);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const [doneList, setDoneList] = useState<Set<keyof SigninForm>>(new Set([]));
+  const [emailEdit, setEmailEdit] = useState(true);
+  const [connectors, setConnectors] = useState<boolean[]>(Array(6).fill(false));
   const [state, setState] = useState<SigninForm>({
     date_of_birth: null,
     username: "",
     password: "",
   } as unknown as SigninForm);
-  const clickCheckHandler = (key: keyof SigninForm) => {
-    console.log("clickCheckHandler ");
-    console.log("Before dl : ", doneList, key);
-    if (doneList.has(key)) doneList.delete(key);
-    else doneList.add(key);
-    console.log("After dl : ", doneList, key);
-    setDoneList(doneList);
+  const clickCheckHandler = () => {
+    setEmailEdit((e) => !e);
   };
   const changeHandler = (e, key: keyof SigninForm) => {
     setState((s) => {
@@ -112,23 +117,23 @@ export const CustomizedTimeline = () => {
       };
       return newState;
     });
-    setDoneList((l) => {
-      l.delete(key);
-      return l;
-    });
   };
   useEffect(() => {
     setTimeline(timelineItems);
   });
+  const decideColor = (isTrue: boolean) => (isTrue ? "green" : "gray");
+
   const timelineItems: TimelineItemProp[] = [
     {
-      key: "username" as keyof SigninForm,
+      // name: FormRows.EMAIL,
       header: "Eat",
+      topConnectorColor: decideColor(connectors[0]),
+      bottomConnectorColor: decideColor(connectors[1]),
       content: (
-        <Row>
-          <Col span={20}>
+        <Row gutter={4}>
+          <Col span={19}>
             <FormControl fullWidth variant="outlined">
-              {doneList.has("username") ? (
+              {!emailEdit ? (
                 state.username
               ) : (
                 <>
@@ -138,26 +143,30 @@ export const CustomizedTimeline = () => {
                     size="small"
                     type="text"
                     label="Email/Phone"
-                    onKeyDown={(e) =>
-                      e.key === "Enter" && clickCheckHandler("username")
+                    onTouchStart={() =>
+                      setConnectors((c) => {
+                        c[0] = true;
+                        return c;
+                      })
                     }
+                    onKeyDown={(e) => e.key === "Enter" && clickCheckHandler()}
                     onChange={(e) => changeHandler(e, "username")}
                   />
                 </>
               )}
             </FormControl>
           </Col>
-          <Col span={4}>
-            {doneList.has("username") ? (
-              <Button onClick={() => clickCheckHandler("username")}>
-                <EditIcon style={{ color: "green" }} />
+          <Col span={5}>
+            {!emailEdit ? (
+              <Button onClick={() => clickCheckHandler()} color="primary">
+                <EditIcon />
               </Button>
             ) : (
               <Button
                 fullWidth
                 variant="contained"
                 className="btn"
-                onClick={() => clickCheckHandler("username")}
+                onClick={() => clickCheckHandler()}
               >
                 <CheckIcon />
               </Button>
@@ -166,90 +175,74 @@ export const CustomizedTimeline = () => {
         </Row>
       ),
       time: "9:30 am",
-      icon: doneList.has("username") ? (
+      icon: !emailEdit ? (
         <CheckCircleOutlineIcon style={{ color: "green" }} />
       ) : (
         <AlternateEmailIcon />
       ),
     },
     {
-      key: "password" as keyof SigninForm,
       header: "Code",
       height: "110px",
+      // name: FormRows.PASSWORD,
       content: (
         <Row className="password-container">
-          <Col span={20}>
+          <Col span={24}>
             <FormControl fullWidth variant="outlined">
-              {doneList.has("password") ? (
-                <div>Password: **********</div>
-              ) : (
-                <>
-                  <FormControl fullWidth variant="outlined">
-                    <InputLabel
-                      size="small"
-                      htmlFor="outlined-adornment-password"
-                    >
-                      Password
-                    </InputLabel>
-                    <OutlinedInput
-                      size="small"
-                      fullWidth
-                      id="outlined-adornment-password"
-                      type={showPassword ? "text" : "password"}
-                      onChange={(e) => changeHandler(e, "password")}
-                      onKeyDown={(e) =>
-                        e.key === "Enter" && clickCheckHandler("password")
-                      }
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      label="Password"
-                    />
-                  </FormControl>
-                  <FormControl
-                    fullWidth
-                    variant="outlined"
-                    className="confirm-password"
-                  >
-                    <InputLabel
-                      size="small"
-                      htmlFor="outlined-adornment-password"
-                    >
-                      Confirm Password
-                    </InputLabel>
-                    <OutlinedInput
-                      size="small"
-                      fullWidth
-                      id="outlined-adornment-password"
-                      type={showPassword ? "text" : "password"}
-                      onChange={(e) => changeHandler(e, "password")}
-                      onKeyDown={(e) =>
-                        e.key === "Enter" && clickCheckHandler("password")
-                      }
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      }
-                      label="Password"
-                    />
-                  </FormControl>
-                </>
-              )}
+              <FormControl fullWidth variant="outlined">
+                <InputLabel size="small" htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  size="small"
+                  fullWidth
+                  id="outlined-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => changeHandler(e, "password")}
+                  onKeyDown={(e) => e.key === "Enter" && clickCheckHandler()}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+              <FormControl
+                fullWidth
+                variant="outlined"
+                className="confirm-password"
+              >
+                <InputLabel size="small" htmlFor="outlined-adornment-password">
+                  Confirm Password
+                </InputLabel>
+                <OutlinedInput
+                  size="small"
+                  fullWidth
+                  id="outlined-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  onChange={(e) => changeHandler(e, "password")}
+                  onKeyDown={(e) => e.key === "Enter" && clickCheckHandler()}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
             </FormControl>
             <Row>Password must contain:</Row>
             <Row gutter={20}>
@@ -261,30 +254,17 @@ export const CustomizedTimeline = () => {
               <Col>&#8226; 8-16 character</Col>
             </Row>
           </Col>
-          <Col span={4} className="password-check-btn">
-            {doneList.has("password") ? (
-              <CheckIcon style={{ color: "green" }} />
-            ) : (
-              <Button
-                fullWidth
-                variant="contained"
-                className="btn"
-                onClick={() => clickCheckHandler("password")}
-              >
-                <CheckIcon />
-              </Button>
-            )}
-          </Col>
         </Row>
       ),
-      time: "10:00 am",
+      time: "4:00 am",
       icon: <KeyIcon />,
     },
     {
       header: "Sleep",
+      // name: FormRows.DOB,
       content: (
         <Row>
-          <Col span={20}>
+          <Col span={24}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 // value={state.date_of_birth}
@@ -294,20 +274,6 @@ export const CustomizedTimeline = () => {
               />
             </LocalizationProvider>
           </Col>
-          <Col span={4}>
-            {doneList.has("date_of_birth") ? (
-              <CheckIcon style={{ color: "green" }} />
-            ) : (
-              <Button
-                fullWidth
-                variant="contained"
-                className="btn"
-                onClick={() => clickCheckHandler("date_of_birth")}
-              >
-                <CheckIcon />
-              </Button>
-            )}
-          </Col>
         </Row>
       ),
       time: "7:00 am",
@@ -315,8 +281,9 @@ export const CustomizedTimeline = () => {
     },
     {
       header: "Repeat",
+      // name: FormRows.SUBMIT,
       content: (
-        <Button fullWidth variant="contained" className="btn">
+        <Button fullWidth variant="contained" className="btn" color="primary">
           SUBMIT&nbsp;&nbsp;&nbsp;
           <InputIcon />
         </Button>
@@ -326,6 +293,7 @@ export const CustomizedTimeline = () => {
     },
     {
       header: "Bonus",
+      // name: FormRows.BONUS,
       content: (
         <div className="highlight-container">
           <div>Get bonus&nbsp;&nbsp;</div>
@@ -361,6 +329,8 @@ export const CustomizedTimeline = () => {
           color="green"
           inlist={{
             belowHeight: item.height,
+            topConnectorColor: item.topConnectorColor,
+            bottomConnectorColor: item.bottomConnectorColor,
           }}
         >
           {/* <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2">

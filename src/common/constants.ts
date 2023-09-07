@@ -12,6 +12,10 @@ export const SIZING = {
   X5L: "48px",
 };
 
+export const COLOR = {
+  PRIMARY:"#3f51b5"
+};
+
 export type CurrencyCode = { [n: string]: string };
 export const currencyCode: CurrencyCode = {
   THB: "\u0E3F",

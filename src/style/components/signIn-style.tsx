@@ -1,3 +1,4 @@
+import { COLOR } from "common/constants";
 import styled from "styled-components";
 
 export const SignInStyle = styled.div`
