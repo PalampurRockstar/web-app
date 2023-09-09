@@ -54,7 +54,9 @@ const SignIn = () => {
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => event.preventDefault();
-  const HeaderText = () => <div className="welcome-text">Welcome back!</div>;
+  const HeaderText = (text: string) => (
+    <div className="welcome-text">{text}</div>
+  );
   const handleLoginClick = () => {
     login({ ...state })
       .then(({ data }) => {
@@ -75,9 +77,7 @@ const SignIn = () => {
               src={fetchImage(["icons", "login.svg"])}
             />
           </Row>
-          <Row className="generat-text">
-            <HeaderText />
-          </Row>
+          <Row className="generat-text">{HeaderText("Welcome back!")}</Row>
           <Row className="generat-text">Please enter your details</Row>
           <Row>
             <FormControl fullWidth variant="standard">

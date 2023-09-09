@@ -1,16 +1,85 @@
 import TimelineItem from "@mui/lab/TimelineItem";
+import { COLOR } from "common/constants";
 import styled from "styled-components";
 
 export const SignUpStyle = styled.div`
-  .signup-container {
-    .MuiTimeline-root {
+  .signup-form {
+    .timeline-container {
+      .threedots-container {
+        height: 24px;
+        width: 100%;
+        position: relative;
+        top: 6px;
+        margin: auto 10px;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .rotate-icon {
+        animation: spin 2s linear infinite; /* Adjust the animation duration as needed */
+      }
+      .username-box {
+        width: 100%;
+        .done-username {
+          padding: 5px;
+        }
+      }
+      .validate-username-result {
+        height: 25px;
+      }
+      .password-error {
+        position: relative;
+        bottom: 6px;
+        margin: 0px;
+      }
+      .error {
+        color: red;
+        font-size: 11px;
+      }
+      .success {
+        color: green;
+      }
+      .suggestions {
+        color: ${COLOR.PRIMARY};
+        font-size: 12px;
+      }
+      max-width: 500px;
       background: rgb(249 236 236 / 88%);
       border-radius: 12px;
       padding: 25px;
       margin: 20px;
-    }
-    .timeline-container {
-      max-width: 500px;
+      .ant-divider-horizontal.ant-divider-with-text {
+        margin: 8px 0;
+      }
+      .text-container {
+        margin-top: 20px;
+        .text {
+          display: flex;
+          justify-content: center;
+          margin: 3px;
+        }
+        .header-text {
+          font-size: x-large;
+          font-weight: bold;
+        }
+      }
+      .social-media-container {
+        margin: 14px 20% 14px;
+
+        button {
+          border-radius: 31px;
+          background: #c5b5b5;
+          height: 50px;
+          width: 36px;
+          min-width: 50px;
+        }
+      }
     }
   }
 
@@ -38,6 +107,9 @@ export const CustomTimelineItem = styled(TimelineItem)`
       height: ${(props) => props.inlist.belowHeight || "10px"};
     }
   }
+  .instruction-container {
+    font-size: 11px;
+  }
   .timeline-content {
     display: flex;
     align-items: center;
@@ -62,13 +134,17 @@ export const CustomTimelineItem = styled(TimelineItem)`
         display: flex;
       }
     }
-    .datepicker {
+    .datepicker-container {
+      position: relative;
       width: 100%;
+      top: 8px;
+      .datepicker {
+      }
     }
     .gift-image {
       position: absolute;
-      right: 22px;
-      top: 15px;
+      left: 118px;
+      top: 89px;
     }
   }
   .MuiTimelineOppositeContent-positionRight {
@@ -83,6 +159,7 @@ export const CustomTimelineItem = styled(TimelineItem)`
   }
   .highlighted {
     background: #dbcad5;
+    height: 24px;
   }
   .highlight-container {
     display: flex;

@@ -127,3 +127,8 @@ export interface SigninForm {
   password: string;
   date_of_birth: string;
 }
+
+export interface ValidateUserNameResponse {
+  found: boolean;
+  recommendation?: string[];
+}
