@@ -125,10 +125,7 @@ export const CustomizedTimeline = () => {
 
       return newState;
     });
-    if (key === "username") {
-      setLoading(true);
-      debouncedSearch(e.target.value);
-    }
+    if (key === "username") debouncedSearch(e.target.value);
     if (key === "password") verifyPassword(false, e.target.value, password0);
     if (key === "date_of_birth") validateDOB(e);
   };
@@ -186,10 +183,10 @@ export const CustomizedTimeline = () => {
     []
   );
 
-  const ShowSuggestionForUserName = (loading: boolean) => {
+  const ShowSuggestionForUserName = () => {
     if (state.username?.length == 0) return "";
 
-    return loading ? (
+    return loadingValidateUid ? (
       "loading.."
     ) : foundError("username") ? (
       ""
@@ -221,7 +218,10 @@ export const CustomizedTimeline = () => {
                     size="small"
                     type="text"
                     label="Email/Phone"
-                    onChange={(e) => changeHandler(e, "username")}
+                    onChange={(e) => {
+                      setLoading(true);
+                      changeHandler(e, "username");
+                    }}
                   />
                 </>
               </FormControl>
@@ -229,7 +229,7 @@ export const CustomizedTimeline = () => {
           </Row>
           <Row>
             <div className="validate-username-result">
-              {ShowSuggestionForUserName(loadingValidateUid)}
+              {ShowSuggestionForUserName()}
               {recommendation.length > 0 && state.username?.length > 0 ? (
                 <div className="suggestions">
                   Please choose : {recommendation?.join(", ")}
