@@ -1,8 +1,6 @@
-import TimelineItem from "@mui/lab/TimelineItem";
-import { COLOR } from "common/constants";
 import styled from "styled-components";
 
-export const SignUpStyle = styled.div`
+export const UserOnboardingStyle = styled.div`
   .signup-form {
     .redirect-signin-container {
       display: flex;
@@ -76,7 +74,6 @@ export const SignUpStyle = styled.div`
         color: green;
       }
       .suggestions {
-        color: ${COLOR.PRIMARY};
         font-size: 12px;
       }
       max-width: 500px;
@@ -119,79 +116,4 @@ export const SignUpStyle = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-`;
-
-export const CustomTimelineItem = styled(TimelineItem)`
-  .timeline-connector {
-    .MuiTimelineConnector-root {
-      background-color: ${(props) => props.color || "red"};
-    }
-    span:nth-child(1) {
-      background-color: ${(props) => props.inlist.topConnectorColor};
-      height: ${(props) => props.inlist.aboveHeight || "10px"};
-      min-height: ${(props) => props.inlist.aboveHeight || "10px"};
-      max-height: ${(props) => props.inlist.aboveHeight || "10px"};
-    }
-    span:nth-child(3) {
-      background-color: ${(props) => props.inlist.bottomConnectorColor};
-      height: ${(props) => props.inlist.belowHeight || "10px"};
-    }
-  }
-  .instruction-container {
-    font-size: 11px;
-  }
-  .timeline-content {
-    display: flex;
-    align-items: center;
-    .ant-row {
-      width: 100%;
-    }
-    .password-container {
-      // position: relative;
-      // top: 22px;
-      position: relative;
-      top: 13px;
-      div {
-        margin-bottom: 4px;
-      }
-      .password-check-btn {
-        display: flex;
-        align-items: flex-start;
-        position: relative;
-        top: 49px;
-      }
-      .pwd-inst-container {
-        display: flex;
-      }
-    }
-    .datepicker-container {
-      position: relative;
-      width: 100%;
-      top: 8px;
-      .datepicker {
-      }
-    }
-    .gift-image {
-      position: absolute;
-      left: 118px;
-      top: 89px;
-    }
-  }
-  .MuiTimelineOppositeContent-positionRight {
-    max-width: 100px;
-  }
-
-  .MuiFormControl-fullWidth {
-    width: 100%;
-  }
-  .btn {
-    padding: 8px;
-  }
-  .highlighted {
-    background: #dbcad5;
-    height: 24px;
-  }
-  .highlight-container {
-    display: flex;
-  }
 `;

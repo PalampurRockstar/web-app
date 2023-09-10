@@ -4,12 +4,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { SigninForm } from "models/model";
 import {
   Button,
+  Checkbox,
   Chip,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  Typography,
 } from "@mui/material";
 import debounce from "lodash/debounce";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -41,7 +45,7 @@ import ThreeRunningDots from "./threeDot";
 import GiftBox from "./giftBox";
 import MyPopup from "./popup";
 import { useNavigate } from "react-router-dom";
-
+import GradingIcon from "@mui/icons-material/Grading";
 export interface TimelineItemProp {
   header: string;
   content: React.ReactNode;
@@ -88,6 +92,7 @@ const SocialMEdiaOptions = () => {
 export const CustomizedTimeline = () => {
   const navigate = useNavigate();
   const [openPopup, setOpenPopup] = useState(false);
+  const [checked, setChecked] = useState(false);
   const [state, setState] = useState<SigninForm>({
     date_of_birth: "",
     username: "",
@@ -122,7 +127,6 @@ export const CustomizedTimeline = () => {
         ...s,
         [key]: key === "date_of_birth" ? e.toLocaleString() : e.target.value,
       };
-
       return newState;
     });
     if (key === "username") debouncedSearch(e.target.value);
@@ -386,14 +390,39 @@ export const CustomizedTimeline = () => {
       icon: <CalendarMonthIcon />,
     },
     {
-      header: "Repeat",
+      height: "5px",
+      header: "TNC",
+      content: (
+        <Row className="tnc-container">
+          <Col span={24}>
+            <Row className="tnc-instruction">
+              By clicking the "I Agree" button, you acknowledge that you have
+              read and agree to these <a>terms and conditions</a>. If you do not
+              agree to these terms, please do not register or use this service
+            </Row>
+            <Row className="checkbox-row">
+              <Checkbox
+                disabled={isDisabled("date_of_birth")}
+                onClick={() => setChecked((c) => !c)}
+              />
+              <Typography>I agree</Typography>
+            </Row>
+          </Col>
+        </Row>
+      ),
+      time: "11:00 am",
+      iconColor: checked ? "green" : "",
+      icon: <GradingIcon />,
+    },
+    {
+      header: "SUBMIT",
       content: (
         <Button
           fullWidth
           variant="contained"
           className="btn"
           color="primary"
-          disabled={isDisabled("date_of_birth") || loadingSubmit}
+          disabled={!checked || loadingSubmit || isCreateed}
           onClick={() => createUser(state)}
         >
           {loadingSubmit ? (
@@ -480,7 +509,7 @@ const RedirectToSigin = () => {
   const navigate = useNavigate();
   return (
     <div className="redirect-signin-container">
-      Don't have an account? &nbsp;&nbsp;
+      Do you have an account? &nbsp;&nbsp;
       <h4 className="signin-text">
         <a onClick={() => navigate(ROUTES.SIGNIN)}>Sign In</a>
       </h4>

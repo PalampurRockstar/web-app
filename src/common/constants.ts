@@ -41,6 +41,7 @@ export const ROUTES = {
   SIGNIN: '/sigin',
   SIGNUP: '/sigup',
   FORGOT_PASSWORD: '/foprgot-password',
+  USER_ONBOARDING: '/user-onboarding',
   TESTVIEW: '/test-view',
 };
 

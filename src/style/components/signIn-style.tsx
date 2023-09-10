@@ -32,6 +32,7 @@ export const SignInStyle = styled.div`
     justify-content: center;
   }
   .login-form {
+    margin: 20px;
     position: relative;
     background: #f9ecec;
     opacity: 0.8;

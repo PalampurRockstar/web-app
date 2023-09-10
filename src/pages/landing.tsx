@@ -11,6 +11,8 @@ import SignUp from "components/signup";
 import TestView from "components/test-view";
 import { Key } from "@mui/icons-material";
 import ForgotPassword from "components/forgot-password";
+import { UserOnboardingStyle } from "style/components/user-onboarding-style";
+import UserOnboarding from "components/user-onboarding";
 
 const Landing = () => {
   const navigate = (uri: string | undefined) => {
@@ -39,6 +41,7 @@ const Landing = () => {
     { uri: ROUTES.SIGNUP, to: <SignUp /> },
     { uri: ROUTES.TESTVIEW, to: <TestView /> },
     { uri: ROUTES.FORGOT_PASSWORD, to: <ForgotPassword /> },
+    { uri: ROUTES.USER_ONBOARDING, to: <UserOnboarding /> },
   ].map((r, i) => {
     return {
       ...r,
