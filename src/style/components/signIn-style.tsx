@@ -9,6 +9,10 @@ export const SignInStyle = styled.div`
     font-size: 14px;
     width: max-content;
   }
+  .error {
+    color: red;
+    font-size: 11px;
+  }
   .login-page {
     overflow: hidden;
     position: relative;

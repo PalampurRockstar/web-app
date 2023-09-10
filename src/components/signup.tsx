@@ -476,7 +476,17 @@ const HeaderText = ({ header, text }) => (
     <div className="text">{text}</div>
   </div>
 );
-
+const RedirectToSigin = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="redirect-signin-container">
+      Don't have an account? &nbsp;&nbsp;
+      <h4 className="signin-text">
+        <a onClick={() => navigate(ROUTES.SIGNIN)}>Sign In</a>
+      </h4>
+    </div>
+  );
+};
 const SignUp = () => {
   return (
     <SignUpStyle
@@ -490,6 +500,7 @@ const SignUp = () => {
             <Chip label="OR" />
           </Divider>
           <CustomizedTimeline />
+          <RedirectToSigin />
         </Col>
       </Row>
     </SignUpStyle>

@@ -10,38 +10,54 @@ import { hideHeaderList, ROUTES } from "common/constants";
 import SignUp from "components/signup";
 import TestView from "components/test-view";
 import { Key } from "@mui/icons-material";
-
+import ForgotPassword from "components/forgot-password";
 
 const Landing = () => {
-  const navigate=(uri:string|undefined)=>{
-    if (uri)window.location.href=uri
-  }
-  const menuSet:MenuOptionProp[]=[{
-    title:'Become a seller',
-  },{
-    title:'Sign In',
-    uri:ROUTES.SIGNIN,
-  },{
-    title:'Sign Up',
-    uri:ROUTES.SIGNUP,
-  }].map(each=>{return {...each,clickHandler:navigate}})
-  
-  const router:AppRouter[]=[
-    {uri:ROUTES.HOME,to:<Home/>},
-    {uri:ROUTES.DETAIL,to:<Detail/>},
-    {uri:ROUTES.SIGNIN,to:<SignIn/>},
-    {uri:ROUTES.SIGNUP,to:<SignUp/>},
-    {uri:ROUTES.TESTVIEW,to:<TestView/>},
-  ].map((r,i)=>{return {...r,to:<>
-  {!hideHeaderList.has(r.uri)&& <AppHeader menuList={menuSet}/>}
-    {r.to}
-  <AppFooter hideHeader={hideHeaderList.has(r.uri)} />
-  </>}})
+  const navigate = (uri: string | undefined) => {
+    if (uri) window.location.href = uri;
+  };
+  const menuSet: MenuOptionProp[] = [
+    {
+      title: "Become a seller",
+    },
+    {
+      title: "Sign In",
+      uri: ROUTES.SIGNIN,
+    },
+    {
+      title: "Sign Up",
+      uri: ROUTES.SIGNUP,
+    },
+  ].map((each) => {
+    return { ...each, clickHandler: navigate };
+  });
+
+  const router: AppRouter[] = [
+    { uri: ROUTES.HOME, to: <Home /> },
+    { uri: ROUTES.DETAIL, to: <Detail /> },
+    { uri: ROUTES.SIGNIN, to: <SignIn /> },
+    { uri: ROUTES.SIGNUP, to: <SignUp /> },
+    { uri: ROUTES.TESTVIEW, to: <TestView /> },
+    { uri: ROUTES.FORGOT_PASSWORD, to: <ForgotPassword /> },
+  ].map((r, i) => {
+    return {
+      ...r,
+      to: (
+        <>
+          {!hideHeaderList.has(r.uri) && <AppHeader menuList={menuSet} />}
+          {r.to}
+          <AppFooter hideHeader={hideHeaderList.has(r.uri)} />
+        </>
+      ),
+    };
+  });
   return (
     <Layout>
       <BrowserRouter>
         <Routes>
-        {router.map((r,i)=><Route key={i} path={r.uri} element={r.to}/>)}
+          {router.map((r, i) => (
+            <Route key={i} path={r.uri} element={r.to} />
+          ))}
         </Routes>
       </BrowserRouter>
     </Layout>

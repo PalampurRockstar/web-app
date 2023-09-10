@@ -4,6 +4,13 @@ import styled from "styled-components";
 
 export const SignUpStyle = styled.div`
   .signup-form {
+    .redirect-signin-container {
+      display: flex;
+      justify-content: center;
+      h4 {
+        margin: 0px;
+      }
+    }
     .timeline-container {
       .threedots-container {
         height: 24px;

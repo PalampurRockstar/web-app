@@ -1,27 +1,10 @@
-import { Col, Divider, Row } from "antd";
-import { useSearchParams } from "react-router-dom";
+import { Col, Row } from "antd";
+
 import { Image } from "antd";
-import styled from "styled-components";
-import { petImages } from "store/pets";
-import { ReactElement, useEffect, useState } from "react";
-import humanizeDuration from "humanize-duration";
-import {
-  BreederProp,
-  DocumentProp,
-  ImageProp,
-  PetProp,
-  SigninProp,
-} from "models/model";
-import Service from "services/petService";
-import { Gutter } from "antd/es/grid/row";
-import { initCap } from "utils/stringFormatter";
-import { ReactComponent as Medal } from "../assets/icons/medal.svg";
-import { ReactComponent as Star } from "../assets/icons/star.svg";
-import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
-import dayjs from "dayjs";
-import { PetShow } from "./petToShow";
+
+import { useState } from "react";
+import { PetProp, SigninProp } from "models/model";
 import { SignInStyle } from "style/components/signIn-style";
-import TextField from "@mui/material/TextField";
 import {
   Button,
   Checkbox,
@@ -38,16 +21,16 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { fetchImage } from "utils/urlFormatter";
 import accessToken from "hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { COLOR, ROUTES } from "common/constants";
+import { ROUTES } from "common/constants";
 import CredService from "services/credentialService";
+import useUserLogin from "hooks/useLogin";
 interface LocationState {
   from: PetProp;
 }
 
 const SignIn = () => {
-  const { login } = CredService();
+  const { loadingLogin, isLoginError, userLogin } = useUserLogin();
   const navigate = useNavigate();
-  const { setAccessToken } = accessToken();
   const [show, setShow] = useState(true);
   const [state, setState] = useState<SigninProp>({} as SigninProp);
   const [showPassword, setShowPassword] = useState(false);
@@ -57,14 +40,7 @@ const SignIn = () => {
   const HeaderText = (text: string) => (
     <div className="welcome-text">{text}</div>
   );
-  const handleLoginClick = () => {
-    login({ ...state })
-      .then(({ data }) => {
-        setAccessToken(data.access_token);
-        navigate(ROUTES.HOME);
-      })
-      .catch((e) => console.log(e));
-  };
+
   const LoginPage = () => (
     <div className="login-page">
       <img src={fetchImage(["login-pet.jpg"])} className="background-image" />
@@ -126,13 +102,26 @@ const SignIn = () => {
             <Col span={13}>
               <FormGroup>
                 <FormControlLabel
-                  control={<Checkbox size="small" />}
+                  control={
+                    <Checkbox
+                      size="small"
+                      onClick={() =>
+                        setState((s) => {
+                          return { ...s, isremember: !state.isremember };
+                        })
+                      }
+                    />
+                  }
                   label={<Typography className="text">Remember me</Typography>}
                 />
               </FormGroup>
             </Col>
             <Col span={11}>
-              <div className="forgot-password text">Forgot password?</div>
+              <div className="forgot-password text">
+                <a onClick={() => navigate(ROUTES.FORGOT_PASSWORD)}>
+                  Forgot password?
+                </a>
+              </div>
             </Col>
           </Row>
           <Row>
@@ -141,11 +130,14 @@ const SignIn = () => {
               variant="contained"
               color="primary"
               className="login-button"
-              onClick={handleLoginClick}
+              onClick={() => userLogin(state, () => navigate(ROUTES.HOME))}
             >
               Log In
             </Button>
           </Row>
+          <div className="error" hidden={!isLoginError}>
+            Invalid username or password!
+          </div>
           <Row>
             <Button
               fullWidth
