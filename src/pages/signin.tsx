@@ -1,10 +1,8 @@
 import { Col, Row } from "antd";
-
 import { Image } from "antd";
-
 import { useState } from "react";
 import { PetProp, SigninProp } from "models/model";
-import { SignInStyle } from "style/components/signIn-style";
+import { SignInStyle } from "style/pages/signIn-style";
 import {
   Button,
   Checkbox,
@@ -19,14 +17,9 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { fetchImage } from "utils/urlFormatter";
-import accessToken from "hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "common/constants";
-import CredService from "services/credentialService";
 import useUserLogin from "hooks/useLogin";
-interface LocationState {
-  from: PetProp;
-}
 
 const SignIn = () => {
   const { loadingLogin, isLoginError, userLogin } = useUserLogin();

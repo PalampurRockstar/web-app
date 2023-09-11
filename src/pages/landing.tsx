@@ -5,14 +5,14 @@ import AppHeader from "components/header";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Detail from "components/detail";
 import { AppRouter, MenuOptionProp } from "models/model";
-import SignIn from "components/signin";
+import SignIn from "pages/signin";
 import { hideHeaderList, ROUTES } from "common/constants";
-import SignUp from "components/signup";
+import SignUp from "pages/signup";
 import TestView from "components/test-view";
 import { Key } from "@mui/icons-material";
 import ForgotPassword from "components/forgot-password";
-import { UserOnboardingStyle } from "style/components/user-onboarding-style";
-import UserOnboarding from "components/user-onboarding";
+import { UserOnboardingStyle } from "style/pages/user-onboarding-style";
+import UserOnboarding from "pages/user-onboarding";
 
 const Landing = () => {
   const navigate = (uri: string | undefined) => {

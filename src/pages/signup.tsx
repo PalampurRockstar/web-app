@@ -18,7 +18,6 @@ import {
 import debounce from "lodash/debounce";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { fetchImage } from "utils/urlFormatter";
-import { CustomTimelineItem, SignUpStyle } from "style/components/signup-style";
 import Timeline from "@mui/lab/Timeline";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
@@ -41,11 +40,13 @@ import LoopIcon from "@mui/icons-material/Loop";
 import _ from "lodash";
 import { COLOR, ROUTES, usernameRegex } from "common/constants";
 import useCreateUser from "hooks/useCreateUser";
-import ThreeRunningDots from "./threeDot";
-import GiftBox from "./giftBox";
-import MyPopup from "./popup";
 import { useNavigate } from "react-router-dom";
 import GradingIcon from "@mui/icons-material/Grading";
+import ThreeRunningDots from "components/threeDot";
+import GiftBox from "components/giftBox";
+import MyPopup from "components/popup";
+import { CustomTimelineItem, SignUpStyle } from "style/pages/signup-style";
+
 export interface TimelineItemProp {
   header: string;
   content: React.ReactNode;

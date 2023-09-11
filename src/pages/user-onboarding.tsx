@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { fetchImage } from "utils/urlFormatter";
-import { CustomTimelineItem, SignUpStyle } from "style/components/signup-style";
 import Timeline from "@mui/lab/Timeline";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
@@ -30,17 +29,14 @@ import InputIcon from "@mui/icons-material/Input";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import BackupIcon from "@mui/icons-material/Backup";
 import RedeemIcon from "@mui/icons-material/Redeem";
-import { timelineItemClasses } from "@mui/lab/TimelineItem";
+import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
 import useValidateUserName from "hooks/useValidateUserName";
 import LoopIcon from "@mui/icons-material/Loop";
 import _ from "lodash";
 import { COLOR, ROUTES, usernameRegex } from "common/constants";
 import useCreateUser from "hooks/useCreateUser";
-import ThreeRunningDots from "./threeDot";
-import GiftBox from "./giftBox";
-import MyPopup from "./popup";
 import { useNavigate } from "react-router-dom";
-import { UserOnboardingStyle } from "style/components/user-onboarding-style";
+import { UserOnboardingStyle } from "style/pages/user-onboarding-style";
 
 const UserOnboarding = () => {
   return (
@@ -49,7 +45,28 @@ const UserOnboarding = () => {
     >
       <Row className="signup-form" justify="center">
         <Col span={24} className="timeline-container">
-          Hi
+          <Timeline>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>Eat</TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>Code</TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineDot />
+              </TimelineSeparator>
+              <TimelineContent>Sleep</TimelineContent>
+            </TimelineItem>
+          </Timeline>
         </Col>
       </Row>
     </UserOnboardingStyle>
