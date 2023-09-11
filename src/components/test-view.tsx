@@ -1,35 +1,7 @@
-import { Col, Divider, Row } from "antd";
-import { useSearchParams } from "react-router-dom";
-import { Image } from "antd";
 import styled from "styled-components";
-import { petImages } from "store/pets";
-import { ReactElement, useCallback, useEffect, useState } from "react";
-import humanizeDuration from "humanize-duration";
-import { BreederProp, DocumentProp, ImageProp, PetProp } from "models/model";
-import Service from "services/petService";
-import { Gutter } from "antd/es/grid/row";
-import { initCap } from "utils/stringFormatter";
-import { ReactComponent as Medal } from "../assets/icons/medal.svg";
-import { ReactComponent as Star } from "../assets/icons/star.svg";
-import { ReactComponent as LocationIcon } from "../assets/icons/location-sign.svg";
-import TextField from "@mui/material/TextField";
-import {
-  Button,
-  Checkbox,
-  debounce,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-  Typography,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { fetchImage } from "utils/urlFormatter";
-import credService from "services/credentialService";
-import accessToken from "hooks/useAuth";
+import { useCallback, useState } from "react";
+import { PetProp } from "models/model";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "common/constants";
 import CredService from "services/credentialService";

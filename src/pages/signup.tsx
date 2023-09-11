@@ -189,7 +189,7 @@ export const CustomizedTimeline = () => {
   );
 
   const ShowSuggestionForUserName = () => {
-    if (state.username?.length == 0) return "";
+    if (state.username?.length === 0) return "";
 
     return loadingValidateUid ? (
       "loading.."
