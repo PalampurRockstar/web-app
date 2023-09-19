@@ -132,3 +132,42 @@ export interface ValidateUserNameResponse {
   found: boolean;
   recommendation?: string[];
 }
+
+export interface OnboardingProp {
+  content?: React.ReactNode;
+  header: string;
+  icon: React.ReactNode;
+}
+
+export const Gender = {
+  Male: "MALE",
+  Female: "FEMALE",
+};
+
+export interface BuyerForm {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  gender: Gender;
+}
+
+export interface Contact {
+  email: string;
+  preferred: string;
+  phone_number: string;
+}
+export interface User {
+  id: string;
+  first_name: string;
+  last_name: string;
+  date_of_birth: string;
+  username: string;
+  password: string;
+  created_at: string;
+  updated_at: string;
+  type: string;
+  gender: Gender;
+  profile_picture_path: string;
+  contact: Contact;
+}

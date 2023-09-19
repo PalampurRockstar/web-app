@@ -1,7 +1,13 @@
 import styled from "styled-components";
 import { useCallback, useState } from "react";
 import { PetProp } from "models/model";
-import { Button } from "@mui/material";
+import {
+  Button,
+  FormControlLabel,
+  FormGroup,
+  Switch,
+  SwitchProps,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "common/constants";
 import CredService from "services/credentialService";
@@ -9,6 +15,9 @@ import LoopIcon from "@mui/icons-material/Loop";
 import _ from "lodash";
 import GiftBox from "./giftBox";
 import MyPopup from "./popup";
+import CustomSwitch from "./customSwitch";
+import styles from "./styles.module.css";
+
 interface LocationState {
   from: PetProp;
 }
@@ -27,6 +36,8 @@ const TestView = () => {
   const { verify, check } = CredService();
   const [text, setText] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
+  const [checked, setChecked] = useState<boolean>(false);
+
   return (
     <TestViewStyle>
       Login success :
@@ -63,11 +74,14 @@ const TestView = () => {
       <LoopIcon className="fas fa-spinner rotate-icon" />
       <GiftBox open={true} ifOpen={() => console.log("Gift is opened")} />
       <Button onClick={() => setOpenPopup(true)}>Open popup</Button>
-      <MyPopup
-        open={openPopup}
-        onOpen={() => navigate(ROUTES.SIGNIN)}
-        onClose={() => navigate(ROUTES.HOME)}
+      <Switch
+        checked={checked}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          setChecked(event.target.checked)
+        }
+        color={"success"}
       />
+      {/* <CustomSwitch width={400} height={50} ifOn={() => console.log("ifOn")} /> */}
     </TestViewStyle>
   );
 };

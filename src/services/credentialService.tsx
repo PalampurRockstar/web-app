@@ -2,7 +2,7 @@ import axios from "axios";
 import { identityHost, onboardingHost } from "common/constants";
 import accessToken from "hooks/useAuth";
 import useIdentityHttp from "hooks/useAxiosPrivate";
-import { LoginCredRequest, SigninForm } from "models/model";
+import { BuyerForm, LoginCredRequest, SigninForm, User } from "models/model";
 
 export const identityHttp = axios.create({
   baseURL: identityHost,
@@ -29,6 +29,9 @@ const CredService = () => {
     },
     insertUser: (user: SigninForm) => {
       return identityUrl.post(`/user`, user);
+    },
+    updateUser: (userId: string, user: User) => {
+      return identityUrl.put(`/user/${userId}`, user);
     },
   };
 };

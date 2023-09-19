@@ -14,3 +14,8 @@ export const initCap = (str: string) => {
 };
 export const zeroPad = (num: number, places: number) =>
   String(num).padStart(places, "0");
+
+export const trimCharacters = (str: string, chars: string) => {
+  const regex = new RegExp(`^[${chars}]+|[${chars}]+$`, "g");
+  return str.replace(regex, "");
+};

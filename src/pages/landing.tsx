@@ -9,10 +9,8 @@ import SignIn from "pages/signin";
 import { hideHeaderList, ROUTES } from "common/constants";
 import SignUp from "pages/signup";
 import TestView from "components/test-view";
-import { Key } from "@mui/icons-material";
 import ForgotPassword from "components/forgot-password";
-import { UserOnboardingStyle } from "style/pages/user-onboarding-style";
-import UserOnboarding from "pages/user-onboarding";
+import UserOnboarding from "pages/userOnboarding";
 
 const Landing = () => {
   const navigate = (uri: string | undefined) => {

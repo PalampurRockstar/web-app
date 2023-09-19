@@ -111,7 +111,7 @@ export const CustomizedTimeline = () => {
 
   const { loadingValidateUid, recommendation, setLoading, validateUserName } =
     useValidateUserName(setStateError);
-  const { loadingSubmit, isCreateed, createUser } = useCreateUser();
+  const { loadingSubmit, isCreateed, createUser, user } = useCreateUser();
   const [hidePassword, setHidePassword] = useState<PasswordSet>({
     password0: true,
     password1: true,
@@ -473,9 +473,22 @@ export const CustomizedTimeline = () => {
       }}
     >
       <MyPopup
+        type="success"
+        onClose={() => {}}
         open={openPopup}
-        onOpen={() => navigate(ROUTES.SIGNIN)}
-        onClose={() => navigate(ROUTES.HOME)}
+        headerText="You have succesfully registered!"
+        content="Do you want to input more details?"
+        buttonSet={[
+          {
+            label: "No",
+            onClick: () => navigate(ROUTES.HOME),
+          },
+          {
+            label: "Yes",
+            onClick: () =>
+              navigate(`${ROUTES.USER_ONBOARDING}?uid=${user?.id}`),
+          },
+        ]}
       />
       {timelineItems.map((item, i) => (
         <CustomTimelineItem
