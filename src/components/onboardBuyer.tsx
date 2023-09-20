@@ -30,7 +30,7 @@ import _ from "lodash";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import styled from "styled-components";
 import { BuyerOnboardingStyle } from "style/components/buyer-onboarding-style";
-import { COLOR, ROUTES } from "common/constants";
+import { COLOR, ROUTES, buckets } from "common/constants";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
@@ -39,6 +39,7 @@ import useUpdateUser from "hooks/useUpdateUser";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { trimCharacters } from "utils/stringFormatter";
 import MyPopup from "./popup";
+import useUploadImage from "hooks/useUploadImage";
 const iconStyle = { width: "20px", height: "20px" };
 interface BuyerOnboardingProp {
   onDone: (s: boolean) => void;
@@ -47,7 +48,7 @@ interface BuyerOnboardingProp {
 export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
   const { loadingUpdate, isUpdated, updateBuyer } = useUpdateUser();
   const [chooseIndex, setChooseIndex] = useState<number>(0);
-
+  const { uploadImage, loadingUploadImage, isSuccessUpload } = useUploadImage();
   const [preferred, setPreferred] = useState({
     isEmail: false,
     isPhone: false,
@@ -88,6 +89,7 @@ export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
           last_name: state.lastName,
           type: "BUYER",
           gender: getGender(),
+          profile_picture_path: imagePath.join("/"),
           contact: {
             email: state.email,
             phone_number: state.phone,
@@ -118,6 +120,11 @@ export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
           {isLastPage ? "Submit" : "Next"}
         </Button>
       </div>
+    );
+  };
+  const handleFileChange = (e) => {
+    uploadImage(e.target.files[0], (s, name) =>
+      setImagePath([buckets.PROFILE_PICTYRE, name])
     );
   };
 
@@ -255,6 +262,7 @@ export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
               id="upload-photo"
               name="upload-photo"
               type="file"
+              onChange={handleFileChange}
             />
             <Fab
               color="primary"

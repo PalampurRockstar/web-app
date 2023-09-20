@@ -33,6 +33,7 @@ export const buckets = {
   PET_SHOW: 'pet-show',
   PET_DETAIL: 'pet-detail',
   ICON_PET_SLIDER: 'icon-pet-slider',
+  PROFILE_PICTYRE: 'profile-pictures',
 };
 
 export const ROUTES = {
