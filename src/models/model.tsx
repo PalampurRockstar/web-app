@@ -149,6 +149,16 @@ export interface BuyerForm {
   lastName: string;
   phone: string;
   email: string;
+  imgPath: string;
+  gender: Gender;
+}
+
+export interface SellerForm {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  imgPath: string;
   gender: Gender;
 }
 

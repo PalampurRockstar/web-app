@@ -15,6 +15,7 @@ import { SellerOnboardingForm } from "components/onboardSeller";
 import MyPopup from "components/popup";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "common/constants";
+import { BuyerForm, SellerForm } from "models/model";
 
 const UserOnboarding = () => {
   const [checked, setChecked] = useState<boolean>(false);
@@ -22,6 +23,10 @@ const UserOnboarding = () => {
   const [isBuyer, setIfBuyer] = buyer;
   const [openPopup, setOpenPopup] = useState(false);
   const navigate = useNavigate();
+  const buyerIndex = useState<number>(0);
+  const sellerIndex = useState<number>(0);
+  const useBuyerState = useState<BuyerForm>({} as BuyerForm);
+  const useSellerState = useState<SellerForm>({} as SellerForm);
   return (
     <UserOnboardingStyle
       style={{ backgroundImage: `url(${fetchImage(["signup-3.jpg"])})` }}
@@ -53,9 +58,17 @@ const UserOnboarding = () => {
           </Col>
         </Row>
         {isBuyer ? (
-          <SellerOnboardingForm />
+          <SellerOnboardingForm
+            useSellerState={useSellerState}
+            useIndex={sellerIndex}
+            onDone={(s) => setOpenPopup(true)}
+          />
         ) : (
-          <BuyerOnboardingForm onDone={(s) => setOpenPopup(true)} />
+          <BuyerOnboardingForm
+            useBuyerState={useBuyerState}
+            useIndex={buyerIndex}
+            onDone={(s) => setOpenPopup(true)}
+          />
         )}
       </div>
     </UserOnboardingStyle>

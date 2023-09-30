@@ -40,25 +40,38 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { trimCharacters } from "utils/stringFormatter";
 import MyPopup from "./popup";
 import useUploadImage from "hooks/useUploadImage";
+import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
+import TagFacesIcon from "@mui/icons-material/TagFaces";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import { favouritePetType } from "store/favourite";
 const iconStyle = { width: "20px", height: "20px" };
 interface BuyerOnboardingProp {
   onDone: (s: boolean) => void;
+  useBuyerState: [BuyerForm, React.Dispatch<React.SetStateAction<BuyerForm>>];
+  useIndex: [number, React.Dispatch<React.SetStateAction<number>>];
 }
 
-export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
+export const BuyerOnboardingForm = ({
+  onDone,
+  useIndex,
+  useBuyerState,
+}: BuyerOnboardingProp) => {
   const { loadingUpdate, isUpdated, updateBuyer } = useUpdateUser();
-  const [chooseIndex, setChooseIndex] = useState<number>(0);
+  const [chooseIndex, setChooseIndex] = useIndex;
   const { uploadImage, loadingUploadImage, isSuccessUpload } = useUploadImage();
   const [preferred, setPreferred] = useState({
     isEmail: false,
     isPhone: false,
   });
-  const [state, setState] = useState<BuyerForm>({} as BuyerForm);
+  const [state, setState] = useBuyerState;
   const [stateError, setStateError] = useState<BuyerForm>({} as BuyerForm);
   const [gender, setGender] = useState({ is: false, isMale: true });
-  const [imagePath, setImagePath] = useState(["image-icons", "male.png"]);
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [favPetType, setFavPetType] = useState<Array<string>>(favouritePetType);
+  const [selectedPetType, setSelectedPetType] = useState<Array<string>>([]);
   const isError = (key: keyof BuyerForm) => stateError[key]?.length > 0;
   const setStateFor = (e, key: keyof BuyerForm) => {
     setState((s) => {
@@ -89,7 +102,7 @@ export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
           last_name: state.lastName,
           type: "BUYER",
           gender: getGender(),
-          profile_picture_path: imagePath.join("/"),
+          profile_picture_path: state.imgPath,
           contact: {
             email: state.email,
             phone_number: state.phone,
@@ -122,12 +135,33 @@ export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
       </div>
     );
   };
-  const handleFileChange = (e) => {
-    uploadImage(e.target.files[0], (s, name) =>
-      setImagePath([buckets.PROFILE_PICTYRE, name])
+  const addToFav = (index: number) => {
+    setFavPetType((chips) =>
+      chips.filter((element, i) => {
+        if (index === i) setSelectedPetType([...selectedPetType, element]);
+        return index !== i;
+      })
+    );
+  };
+  const removeFromFav = (index: number) => () => {
+    setSelectedPetType((chips) =>
+      chips.filter((element, i) => {
+        if (index === i) setFavPetType([...favPetType, element]);
+        return index !== i;
+      })
     );
   };
 
+  const handleFileChange = (e) => {
+    uploadImage(e.target.files[0], (s, name) => {
+      setState({ ...state, imgPath: `${buckets.PROFILE_PICTYRE}/${name}` });
+    });
+  };
+  const getImagePath = () => {
+    if (state.imgPath?.length > 0) return state.imgPath.split("/");
+    if (gender.is && !gender.isMale) return ["image-icons", "female.png"];
+    return ["image-icons", "male.png"];
+  };
   const renderList: OnboardingProp[] = [
     {
       header: "Personal info",
@@ -166,7 +200,7 @@ export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
                 checked={gender.is && !gender.isMale}
                 onClick={() => {
                   setGender({ is: true, isMale: false });
-                  setImagePath(["image-icons", "female.png"]);
+                  // setImagePath(["image-icons", "female.png"]);
                 }}
               />
               <div>Female</div>
@@ -177,7 +211,7 @@ export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
                 checked={gender.is && gender.isMale}
                 onClick={() => {
                   setGender({ is: true, isMale: true });
-                  setImagePath(["image-icons", "male.png"]);
+                  // setImagePath(["image-icons", "male.png"]);
                 }}
               />
               <div>Male</div>
@@ -253,6 +287,35 @@ export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
       ),
     },
     {
+      header: "Favourite",
+      content: (
+        <div className="favourite-input">
+          <Card className="selected-items">
+            <div className="fav-heading">Selected</div>
+            {selectedPetType.map((data, i) => (
+              <Chip key={i} label={data} onDelete={removeFromFav(i)} />
+            ))}
+          </Card>
+          <div className="fav-heading">Choose your preference</div>
+          {favPetType.map((data, i) => (
+            <Chip
+              onClick={() => addToFav(i)}
+              key={i}
+              label={data}
+              // onDelete={addToFav(i)}
+              // avatar={<ControlPointIcon />}
+            />
+          ))}
+        </div>
+      ),
+      icon: (
+        <ThumbUpOffAltIcon
+          style={iconStyle}
+          onClick={() => setChooseIndex(1)}
+        />
+      ),
+    },
+    {
       header: "Upload Picture",
       content: (
         <div className="picture-input">
@@ -274,7 +337,7 @@ export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
               <AddCircleOutlinedIcon /> Upload photo
             </Fab>
           </label>
-          <img src={fetchImage(imagePath)} height="90px" />
+          <img src={fetchImage(getImagePath())} height="90px" />
         </div>
       ),
       icon: (
@@ -285,7 +348,7 @@ export const BuyerOnboardingForm = ({ onDone }: BuyerOnboardingProp) => {
   const decideColor = (i: number) => {
     if (isUpdated) return "green";
     return i === chooseIndex
-      ? "orange"
+      ? "#f1714bf7"
       : i < chooseIndex
       ? "green"
       : COLOR.PRIMARY;

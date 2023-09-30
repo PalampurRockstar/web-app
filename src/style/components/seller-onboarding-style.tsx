@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const BuyerOnboardingStyle = styled.div`
+export const SellerOnboardingStyle = styled.div`
   .timeline-container {
     .header-section {
       height: 30px;
@@ -19,7 +19,7 @@ export const BuyerOnboardingStyle = styled.div`
         // margin: 5px 0px;
       }
       .input-area {
-        height: 226px;
+        height: 145px;
       }
       .picture-input {
         .upload-photo {
@@ -31,25 +31,6 @@ export const BuyerOnboardingStyle = styled.div`
         img {
           display: flex;
           margin: 10px auto;
-        }
-      }
-      .favourite-input {
-        width: 237px;
-        .fav-heading {
-          padding: 10px;
-        }
-        .MuiChip-root {
-          height: 22px;
-          margin: 1px;
-        }
-        .selected-items {
-          background: transparent;
-          padding: 5px;
-        }
-        .to-selected-items {
-          width: 237px;
-          background: transparent;
-          padding: 5px;
         }
       }
       .personal-input {

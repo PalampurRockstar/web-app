@@ -37,7 +37,33 @@ const useBuyerUser = () => {
     }
   };
 
-  return { loadingUpdate, isUpdated, updateBuyer };
+  const updateSeller = async (
+    userId: string,
+    buyer: User,
+    ifDone: (s: boolean) => void
+  ) => {
+    setloadingUpdate(true);
+    try {
+      updateUser(userId, buyer)
+        .then((r) => {
+          setTimeout(() => {
+            setIsUpdated(true);
+            setloadingUpdate(false);
+            ifDone(true);
+          }, 2000);
+        })
+        .catch(() => {
+          setIsUpdated(false);
+          setloadingUpdate(false);
+          ifDone(false);
+        })
+        .finally(() => {});
+    } catch (error) {
+      console.error("Error fetching data from useCreateUser:", error);
+    }
+  };
+
+  return { loadingUpdate, isUpdated, updateBuyer, updateSeller };
 };
 
 export default useBuyerUser;
