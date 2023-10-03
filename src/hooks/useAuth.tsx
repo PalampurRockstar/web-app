@@ -1,3 +1,5 @@
+import { decodeJwt } from "utils/jwtUtil";
+
 const accessToken = () => {
   return {
     setRemember: () => {
@@ -10,8 +12,9 @@ const accessToken = () => {
       localStorage.setItem("access_token", token);
     },
     getAccessToken: () => {
-      if (localStorage.getItem("is_remember") === "true")
-        return localStorage.getItem("access_token");
+      if (localStorage.getItem("access_token")) {
+        return decodeJwt(localStorage.getItem("access_token"));
+      }
       return null;
     },
     removeAccessToken: () => {

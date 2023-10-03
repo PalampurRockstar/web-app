@@ -43,6 +43,7 @@ export const ROUTES = {
   SIGNUP: '/sigup',
   FORGOT_PASSWORD: '/foprgot-password',
   USER_ONBOARDING: '/user-onboarding',
+  PET_ONBOARDING: '/pet-onboarding',
   TESTVIEW: '/test-view',
 };
 

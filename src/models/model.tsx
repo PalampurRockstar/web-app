@@ -179,5 +179,6 @@ export interface User {
   type: string;
   gender: Gender;
   profile_picture_path: string;
+  preferred_pet_type: string;
   contact: Contact;
 }

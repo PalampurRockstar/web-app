@@ -23,21 +23,21 @@ const TitleText = () => {
   );
 };
 const Home = () => {
-  const [loading,setLoading]=useState(true)
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [petList, setPetList] = React.useState<PetProp[]>([]);
   const [criteria, setCriteria] = React.useState<SearchCriteria>(
     {} as SearchCriteria
   );
 
-  useEffect(()=>{
-    const {getAccessToken}=accessToken()
-    if(getAccessToken())setLoading(false)
-    else navigate(ROUTES.SIGNIN)
-  },[])
-    
-  
-  
+  useEffect(() => {
+    // const { getAccessToken } = accessToken();
+    // console.log(" getAccessToken : ", getAccessToken);
+    // if (getAccessToken()) setLoading(false);
+    // else navigate(ROUTES.SIGNIN);
+    setLoading(false);
+  }, []);
+
   React.useEffect(() => {
     reloadPetList(criteria);
   }, [criteria]);
@@ -58,10 +58,10 @@ const Home = () => {
         console.log(e);
       });
   };
-  if (loading) return <>loading</>
+  if (loading) return <>loading</>;
   return (
     <BodyContent>
-      <LandingPageImage preview={false} src={fetchImage(['landing.jpg'])} />
+      <LandingPageImage preview={false} src={fetchImage(["landing.jpg"])} />
       <TitleText />
       <LocationSelector
         locationSearched={(value) =>
@@ -78,7 +78,7 @@ const Home = () => {
           setCriteria((c) => ({ ...c, type: value }));
         }}
       />
-      <PetShow petlist={petList} style={{justifyContent:'center'}}/>
+      <PetShow petlist={petList} style={{ justifyContent: "center" }} />
     </BodyContent>
   );
 };

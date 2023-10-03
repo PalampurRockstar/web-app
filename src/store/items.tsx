@@ -18,6 +18,8 @@ export const MenuItems = [
     icon: <ShoppingCartOutlined />,
   },
   {
-    icon: <MenuProfileImage preview={false} src={fetchImage(['sourabh.jpg'])} />,
+    icon: (
+      <MenuProfileImage preview={false} src={fetchImage(["sourabh.jpg"])} />
+    ),
   },
 ];

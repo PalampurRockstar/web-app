@@ -11,27 +11,9 @@ import SignUp from "pages/signup";
 import TestView from "components/test-view";
 import ForgotPassword from "components/forgot-password";
 import UserOnboarding from "pages/userOnboarding";
+import PetOnboarding from "./petOnboarding";
 
 const Landing = () => {
-  const navigate = (uri: string | undefined) => {
-    if (uri) window.location.href = uri;
-  };
-  const menuSet: MenuOptionProp[] = [
-    {
-      title: "Become a seller",
-    },
-    {
-      title: "Sign In",
-      uri: ROUTES.SIGNIN,
-    },
-    {
-      title: "Sign Up",
-      uri: ROUTES.SIGNUP,
-    },
-  ].map((each) => {
-    return { ...each, clickHandler: navigate };
-  });
-
   const router: AppRouter[] = [
     { uri: ROUTES.HOME, to: <Home /> },
     { uri: ROUTES.DETAIL, to: <Detail /> },
@@ -40,12 +22,13 @@ const Landing = () => {
     { uri: ROUTES.TESTVIEW, to: <TestView /> },
     { uri: ROUTES.FORGOT_PASSWORD, to: <ForgotPassword /> },
     { uri: ROUTES.USER_ONBOARDING, to: <UserOnboarding /> },
+    { uri: ROUTES.PET_ONBOARDING, to: <PetOnboarding /> },
   ].map((r, i) => {
     return {
       ...r,
       to: (
         <>
-          {!hideHeaderList.has(r.uri) && <AppHeader menuList={menuSet} />}
+          {!hideHeaderList.has(r.uri) && <AppHeader />}
           {r.to}
           <AppFooter hideHeader={hideHeaderList.has(r.uri)} />
         </>

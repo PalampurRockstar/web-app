@@ -52,12 +52,14 @@ interface BuyerOnboardingProp {
   onDone: (s: boolean) => void;
   useBuyerState: [BuyerForm, React.Dispatch<React.SetStateAction<BuyerForm>>];
   useIndex: [number, React.Dispatch<React.SetStateAction<number>>];
+  isBuyer: boolean;
 }
 
-export const BuyerOnboardingForm = ({
+export const OnboardingForm = ({
   onDone,
   useIndex,
   useBuyerState,
+  isBuyer,
 }: BuyerOnboardingProp) => {
   const { loadingUpdate, isUpdated, updateBuyer } = useUpdateUser();
   const [chooseIndex, setChooseIndex] = useIndex;
@@ -100,9 +102,10 @@ export const BuyerOnboardingForm = ({
         {
           first_name: state.firstName,
           last_name: state.lastName,
-          type: "BUYER",
+          type: isBuyer ? "BUYER" : "SELLER",
           gender: getGender(),
           profile_picture_path: state.imgPath,
+          preferred_pet_type: selectedPetType?.join(","),
           contact: {
             email: state.email,
             phone_number: state.phone,

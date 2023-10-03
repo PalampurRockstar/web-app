@@ -7,7 +7,7 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineDot from "@mui/lab/TimelineDot";
 import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
 import _ from "lodash";
-import { UserOnboardingStyle } from "style/pages/user-onboarding-style";
+import { PetOnboardingStyle } from "style/pages/pet-onboarding-style";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import CustomSwitch from "components/customSwitch";
 import { OnboardingForm } from "components/onboardForm";
@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "common/constants";
 import { BuyerForm, SellerForm } from "models/model";
 
-const UserOnboarding = () => {
+const PetOnboarding = () => {
   const [checked, setChecked] = useState<boolean>(false);
   const buyer = useState(false);
   const [isBuyer, setIfBuyer] = buyer;
@@ -27,7 +27,7 @@ const UserOnboarding = () => {
   const useBuyerState = useState<BuyerForm>({} as BuyerForm);
   const useSellerState = useState<SellerForm>({} as SellerForm);
   return (
-    <UserOnboardingStyle
+    <PetOnboardingStyle
       style={{ backgroundImage: `url(${fetchImage(["signup-3.jpg"])})` }}
     >
       <MyPopup
@@ -63,7 +63,7 @@ const UserOnboarding = () => {
           isBuyer={isBuyer}
         />
       </div>
-    </UserOnboardingStyle>
+    </PetOnboardingStyle>
   );
 };
-export default UserOnboarding;
+export default PetOnboarding;
