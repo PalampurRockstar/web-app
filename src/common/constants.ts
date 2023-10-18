@@ -1,4 +1,5 @@
 export const THEME = {};
+export const INITIAL_TIME="00:00"
 
 export const SIZING = {
   XS: "2px",
@@ -34,6 +35,7 @@ export const buckets = {
   PET_DETAIL: 'pet-detail',
   ICON_PET_SLIDER: 'icon-pet-slider',
   PROFILE_PICTYRE: 'profile-pictures',
+  POST_IMAGES: 'post-images',
 };
 
 export const ROUTES = {

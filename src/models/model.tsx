@@ -32,11 +32,7 @@ export interface PetProp {
   description: string;
   documents: DocumentProp[];
 }
-export interface ImageProp {
-  id: string;
-  file: string;
-  path: string;
-}
+
 export interface DocumentProp {
   id: string;
   name: string;
@@ -44,10 +40,8 @@ export interface DocumentProp {
   validUntil: string;
 }
 export interface ImageProp {
-  id: string;
-  file: string;
+  id?: string;
   path: string;
-  cdn: string;
 }
 export interface Review {
   id: string;
@@ -181,4 +175,8 @@ export interface User {
   profile_picture_path: string;
   preferred_pet_type: string;
   contact: Contact;
+}
+export interface PetOnboarrding {
+  images: ImageProp[];
+  image: string;
 }

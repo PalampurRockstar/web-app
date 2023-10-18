@@ -156,7 +156,7 @@ export const OnboardingForm = ({
   };
 
   const handleFileChange = (e) => {
-    uploadImage(e.target.files[0], (s, name) => {
+    uploadImage(buckets.PROFILE_PICTYRE, e.target.files[0], (s, name) => {
       setState({ ...state, imgPath: `${buckets.PROFILE_PICTYRE}/${name}` });
     });
   };

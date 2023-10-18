@@ -9,12 +9,13 @@ const useUploadImage = () => {
   const [isSuccessUpload, setSuccessUpload] = useState<boolean>();
   const { upload } = ObjectService();
   const uploadImage = async (
+    object_name: string,
     file: File,
     ifDone: (status: boolean, name: string) => void
   ) => {
     setLoadingUploadImage(true);
     try {
-      upload(buckets.PROFILE_PICTYRE, file)
+      upload(object_name, file)
         .then((r) => {
           setSuccessUpload(true);
           ifDone(true, file.name);

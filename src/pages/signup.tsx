@@ -366,15 +366,13 @@ export const CustomizedTimeline = () => {
         <div className="datepicker-container">
           <Row>
             <Col span={24}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  disabled={isDisabled("password")}
-                  label="Date of birth"
-                  onChange={(d) => changeHandler(d, "date_of_birth")}
-                  slotProps={{ textField: { size: "small", fullWidth: true } }}
-                  className="datepicker"
-                />
-              </LocalizationProvider>
+              <DatePicker
+                disabled={isDisabled("password")}
+                label="Date of birth"
+                onChange={(d) => changeHandler(d, "date_of_birth")}
+                slotProps={{ textField: { size: "small", fullWidth: true } }}
+                className="datepicker"
+              />
             </Col>
           </Row>
           <Row className="instruction-container">

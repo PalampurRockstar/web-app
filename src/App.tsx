@@ -7,12 +7,16 @@ import {
   PaletteColorOptions,
   ThemeProvider,
 } from "@mui/material/styles";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AppTheme } from "style/theme";
 const App = () => {
   return (
     <div className="App">
       <ThemeProvider theme={AppTheme}>
-        <Landing />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Landing />
+        </LocalizationProvider>
       </ThemeProvider>
     </div>
   );
